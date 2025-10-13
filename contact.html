@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinelora ArtArch | Contact</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* User's Requested Color Palette */
+            --color-white: #f8f8f8;
+            --color-dark-gray: #1f2223;
+            --color-coral: #13543E;       /* Deep Green */
+            --color-beige-gold: #dc143c;  /* Crimson Red as accent */
+            --color-light-accent: #2A7F62;
+            --color-dark-accent: #0C3B2E;
+
+            /* Modern Fonts */
+            --font-primary: 'Plus Jakarta Sans', sans-serif;
+            --font-secondary: 'Lora', serif;
+            --font-logo: 'Playfair Display', serif; /* Added for logo consistency */
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-primary );
+            background: linear-gradient(135deg, var(--color-dark-accent), var(--color-coral));
+            color: var(--color-white);
+            display: flex;
+            flex-direction: column; /* Changed to column layout */
+            justify-content: space-between; /* Pushes footer down */
+            min-height: 100vh;
+            line-height: 1.7;
+            padding-top: 80px; /* Space for fixed header */
+        }
+
+        main {
+            flex-grow: 1; /* Allows main content to take up available space */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            width: 100%;
+            max-width: 1200px;
+            min-height: 700px;
+            background: rgba(12, 59, 46, 0.5);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- Info Section (Left Side) --- */
+        .info-section {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-container img {
+            width: 170px;
+            height: 170px;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+            transition: transform 0.4s ease;
+        }
+        .logo-container img:hover {
+            transform: rotate(15deg);
+        }
+
+        .info-title {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--color-white);
+        }
+
+        .info-title span {
+            color: var(--color-beige-gold);
+        }
+
+        .info-subtitle {
+            font-family: var(--font-secondary);
+            font-size: 1.1rem;
+            color: rgba(248, 248, 248, 0.8);
+            margin-bottom: 3rem;
+        }
+
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .contact-item-icon {
+            font-size: 1.2rem;
+            color: var(--color-beige-gold);
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+
+        .contact-item-details h4 {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: rgba(248, 248, 248, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-item-details p,
+        .contact-item-details a {
+            font-size: 1rem;
+            color: var(--color-white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item-details a:hover {
+            color: var(--color-beige-gold);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .social-links a {
+            font-size: 1.1rem;
+            color: rgba(248, 248, 248, 0.8);
+        }
+        .social-links a:hover {
+            color: var(--color-white);
+        }
+
+        /* --- Form Section (Right Side) --- */
+        .form-section {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: var(--color-white);
+            color: var(--color-dark-gray);
+        }
+
+        .form-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .form-title {
+            font-weight: 800;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-dark-accent);
+        }
+
+        .form-description {
+            font-family: var(--font-secondary);
+            font-style: italic;
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--color-dark-gray);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            background-color: #f0f2f5;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            color: var(--color-dark-gray);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-coral);
+            box-shadow: 0 0 0 3px rgba(19, 84, 62, 0.15);
+        }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--color-beige-gold);
+            color: var(--color-white);
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #b81034;
+            transform: translateY(-3px);
+        }
+
+        /* --- Header Section --- */
+        #site-header {
+            background: rgba(12, 59, 46, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(19, 84, 62, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--color-beige-gold);
+            background: var(--color-white);
+            padding: 4px;
+        }
+
+        .logo span {
+            font-family: var(--font-logo);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-white);
+            letter-spacing: 0.5px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 40px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--color-white);
+            font-weight: 500;
+            font-size: 16px;
+            padding: 8px 0;
+            transition: color 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav ul li a::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-beige-gold);
+            transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        nav ul li a:hover {
+            color: var(--color-beige-gold);
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: var(--color-beige-gold);
+            color: var(--color-white);
+            border: 2px solid var(--color-beige-gold);
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(220, 20, 60, 0.2);
+            text-decoration: none;
+        }
+
+        .cta-btn:hover {
+            background: transparent;
+            color: var(--color-beige-gold);
+            transform: translateY(-2px);
+        }
+
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .burger-line {
+            width: 28px;
+            height: 3px;
+            background-color: var(--color-white);
+            border-radius: 3px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .burger-menu.active .burger-line:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .burger-menu.active .burger-line:nth-child(2) { opacity: 0; }
+        .burger-menu.active .burger-line:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+
+        .mobile-menu {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 80px);
+            background: rgba(12, 59, 46, 0.98);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(100%);
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+            z-index: 999;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+            visibility: visible;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            flex-direction: column;
+            gap: 20px;
+            padding: 0;
+            text-align: center;
+        }
+
+        .mobile-menu ul li a {
+            color: var(--color-white);
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: 500;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mobile-cta {
+            margin-top: 40px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--color-primary);
+            color: var(--color-white);
+            padding: 2rem 1rem;
+            text-align: center;
+            width: 100%; /* Ensure footer spans full width */
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-family: var(--font-logo);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--color-beige-gold);
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .footer-content p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin: 0 auto 15px;
+            max-width: 600px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .footer-links a {
+            color: var(--color-white);
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-beige-gold);
+        }
+
+        .copyright {
+            margin-top: 10px;
+            color: rgba(248, 248, 248, 0.6);
+            font-size: 0.8rem;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+            .info-section {
+                text-align: center;
+            }
+            .contact-item {
+                align-items: center;
+                text-align: left;
+            }
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 1rem;
+            }
+            .info-section, .form-section {
+                padding: 2rem;
+            }
+            .info-title { font-size: 2rem; }
+            .form-title { font-size: 1.8rem; }
+            nav, .cta-btn {
+                display: none;
+            }
+            .burger-menu {
+                display: flex;
+            }
+            .logo span {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="site-header">
+      <div class="nav-container">
+        <a href="/index.html" class="logo">
+          <img class="logo-img" src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760308204/upeCQf0mTnmn12zeUoggLA_jduicz.png" alt="Vinelora Logo"/>
+          <span>Vinelora ArtArch</span>
+        </a>
+        <nav>
+          <ul>
+            <li><a href="/portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+            <li><a href="/AboutPage.html"><i class="fas fa-user"></i> About</a></li>
+            <li><a href="/contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+          </ul>
+        </nav>
+        <a href="/contact.html" class="cta-btn">Get in Touch</a>
+        <div class="burger-menu" onclick="toggleMobileMenu()">
+          <div class="burger-line"></div>
+          <div class="burger-line"></div>
+          <div class="burger-line"></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="/portfolio.html" onclick="closeMobileMenu()"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+        <li><a href="/AboutPage.html" onclick="closeMobileMenu()"><i class="fas fa-user"></i> About</a></li>
+        <li><a href="/contact.html" onclick="closeMobileMenu()"><i class="fas fa-envelope"></i> Contact</a></li>
+      </ul>
+      <div class="mobile-cta">
+        <a href="/contact.html" class="cta-btn" onclick="closeMobileMenu()">Get in Touch</a>
+      </div>
+    </div>
+
+    <main>
+        <div class="contact-container">
+            <!-- Info Section -->
+            <section class="info-section">
+                <div class="logo-container">
+                    <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760308204/upeCQf0mTnmn12zeUoggLA_jduicz.png" alt="Vinelora ArtArch Logo">
+                </div>
+                <h1 class="info-title">Let's Build <span>Together.</span></h1>
+                <p class="info-subtitle">We're here to turn your vision into a tangible masterpiece. Reach out and let the dialogue begin.</p>
+
+                <div class="contact-list">
+                    <div class="contact-item">
+                        <i class="contact-item-icon fa-solid fa-envelope"></i>
+                        <div class="contact-item-details">
+                            <h4>Email Us</h4>
+                            <p><a href="mailto:tasneem.shehab94@gmail.com">tasneem.shehab94@gmail.com</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="contact-item-icon fa-solid fa-phone"></i>
+                        <div class="contact-item-details">
+                            <h4>Call Us</h4>
+                            <p>+962 (078) 796-7253</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="contact-item-icon fa-solid fa-share-nodes"></i>
+                        <div class="contact-item-details">
+                            <h4>Follow Us</h4>
+                            <div class="social-links">
+                                <a href="https://www.facebook.com/rose.toto.9/" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="https://www.instagram.com/tasneem_shehab/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="https://www.linkedin.com/in/tasneem-abu-shehab-024341148/" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Form Section -->
+            <section class="form-section">
+                <div class="form-header">
+                    <h2 class="form-title">Send a Message</h2>
+                    <p class="form-description">Have a question or a project in mind? Drop us a line.</p>
+                </div>
+
+                <form action="https://formspree.io/f/xdkwnlqe" method="POST">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" id="name" name="name" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message" class="form-label">Your Message</label>
+                        <textarea id="message" name="message" class="form-input" rows="4" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-button">Send Inquiry</button>
+                </form>
+            </section>
+        </div>
+    </main>
+      
+    <footer id="contact-footer">
+        <div class="footer-content">
+            <a href="/" class="footer-logo">Vinelora ArtArch</a>
+            <p>
+                Creative portfolio showcasing the intersection of art and
+                architecture through innovative design and expression.
+            </p>
+            <div class="footer-links">
+                <a href="https://www.instagram.com/tasneem_shehab/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/rose.toto.9/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.linkedin.com/in/tasneem-abu-shehab-024341148/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <p class="copyright">
+                © 2025 Vinelora ArtArch. All rights reserved.
+            </p>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile menu functions
+        function toggleMobileMenu( ) {
+            const burger = document.querySelector(".burger-menu");
+            const mobileMenu = document.getElementById("mobileMenu");
+            burger.classList.toggle("active");
+            mobileMenu.classList.toggle("active");
+        }
+
+        function closeMobileMenu() {
+            const burger = document.querySelector(".burger-menu");
+            const mobileMenu = document.getElementById("mobileMenu");
+            burger.classList.remove("active");
+            mobileMenu.classList.remove("active");
+        }
+    </script>
+</body>
+</html>
