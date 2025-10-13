@@ -1407,7 +1407,7 @@ footer {
         .image-panel {
             width: 18%; /* عرض كل لوحة */
             height: 80%;
-            background: url('images/Architecture/kj.rvt_2018-Jun-04_12-47-02PM-000_3D_View_22_jpeg.jpg' ) no-repeat;
+            background: url('https://res.cloudinary.com/dj4k75lkt/image/upload/v1760211269/gfg_iu3gmb.jpg' ) no-repeat;
             background-size: cover;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1),
