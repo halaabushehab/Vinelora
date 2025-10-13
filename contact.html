@@ -11,51 +11,37 @@
 
     <style>
         :root {
-            /* User's Requested Color Palette */
             --color-white: #f8f8f8;
             --color-dark-gray: #1f2223;
-            --color-coral: #13543E;       /* Deep Green */
-            --color-beige-gold: #dc143c;  /* Crimson Red as accent */
+            --color-coral: #13543E;
+            --color-beige-gold: #dc143c;
             --color-light-accent: #2A7F62;
             --color-dark-accent: #0C3B2E;
-
-            /* Modern Fonts */
             --font-primary: 'Plus Jakarta Sans', sans-serif;
             --font-secondary: 'Lora', serif;
-            --font-logo: 'Playfair Display', serif; /* Added for logo consistency */
+            --font-logo: 'Playfair Display', serif;
         }
-
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: var(--font-primary );
-            background: linear-gradient(135deg, var(--color-dark-accent), var(--color-coral));
+            background: linear-gradient(135deg, var(--color-dark-accent));
             color: var(--color-white);
             display: flex;
-            flex-direction: column; /* Changed to column layout */
-            justify-content: space-between; /* Pushes footer down */
+            flex-direction: column;
+            justify-content: space-between;
             min-height: 100vh;
             line-height: 1.7;
-            padding-top: 80px; /* Space for fixed header */
+            padding-top: 80px;
         }
-
         main {
-            flex-grow: 1; /* Allows main content to take up available space */
+            flex-grow: 1;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 2rem;
             width: 100%;
         }
-
         .contact-container {
             display: grid;
             grid-template-columns: 1fr 1.2fr;
@@ -67,11 +53,9 @@
             -webkit-backdrop-filter: blur(15px);
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            box-shadow: 10px 25px 50px -12px rgba(255, 255, 255, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        /* --- Info Section (Left Side) --- */
         .info-section {
             padding: 3rem;
             display: flex;
@@ -79,12 +63,7 @@
             justify-content: center;
             background-color: rgba(0, 0, 0, 0.2);
         }
-
-        .logo-container {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
+        .logo-container { text-align: center; margin-bottom: 2rem; }
         .logo-container img {
             width: 170px;
             height: 170px;
@@ -92,10 +71,7 @@
             opacity: 0.9;
             transition: transform 0.4s ease;
         }
-        .logo-container img:hover {
-            transform: rotate(15deg);
-        }
-
+        .logo-container img:hover { transform: rotate(15deg); }
         .info-title {
             font-family: var(--font-primary);
             font-weight: 800;
@@ -104,37 +80,21 @@
             margin-bottom: 1rem;
             color: var(--color-white);
         }
-
-        .info-title span {
-            color: var(--color-beige-gold);
-        }
-
+        .info-title span { color: var(--color-beige-gold); }
         .info-subtitle {
             font-family: var(--font-secondary);
             font-size: 1.1rem;
             color: rgba(248, 248, 248, 0.8);
             margin-bottom: 3rem;
         }
-
-        .contact-list {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
+        .contact-list { display: flex; flex-direction: column; gap: 2rem; }
+        .contact-item { display: flex; align-items: flex-start; gap: 1rem; }
         .contact-item-icon {
             font-size: 1.2rem;
             color: var(--color-beige-gold);
             margin-top: 5px;
             flex-shrink: 0;
         }
-
         .contact-item-details h4 {
             font-weight: 600;
             font-size: 0.9rem;
@@ -143,34 +103,17 @@
             letter-spacing: 1px;
             margin-bottom: 0.3rem;
         }
-
-        .contact-item-details p,
-        .contact-item-details a {
+        .contact-item-details p, .contact-item-details a {
             font-size: 1rem;
             color: var(--color-white);
             text-decoration: none;
             transition: color 0.3s ease;
+            word-break: break-all; /* Prevents long links from overflowing */
         }
-
-        .contact-item-details a:hover {
-            color: var(--color-beige-gold);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 0.5rem;
-        }
-
-        .social-links a {
-            font-size: 1.1rem;
-            color: rgba(248, 248, 248, 0.8);
-        }
-        .social-links a:hover {
-            color: var(--color-white);
-        }
-
-        /* --- Form Section (Right Side) --- */
+        .contact-item-details a:hover { color: var(--color-beige-gold); }
+        .social-links { display: flex; gap: 1rem; margin-top: 0.5rem; }
+        .social-links a { font-size: 1.1rem; color: rgba(248, 248, 248, 0.8); }
+        .social-links a:hover { color: var(--color-white); }
         .form-section {
             padding: 3rem;
             display: flex;
@@ -179,29 +122,20 @@
             background-color: var(--color-white);
             color: var(--color-dark-gray);
         }
-
-        .form-header {
-            margin-bottom: 2.5rem;
-        }
-
+        .form-header { margin-bottom: 2.5rem; }
         .form-title {
             font-weight: 800;
             font-size: 2rem;
             margin-bottom: 0.5rem;
             color: var(--color-dark-accent);
         }
-
         .form-description {
             font-family: var(--font-secondary);
             font-style: italic;
             color: #555;
             font-size: 1.1rem;
         }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
+        .form-group { margin-bottom: 1.5rem; }
         .form-label {
             display: block;
             font-size: 0.9rem;
@@ -209,7 +143,6 @@
             margin-bottom: 0.5rem;
             color: var(--color-dark-gray);
         }
-
         .form-input {
             width: 100%;
             padding: 0.9rem 1rem;
@@ -221,18 +154,12 @@
             color: var(--color-dark-gray);
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-
         .form-input:focus {
             outline: none;
             border-color: var(--color-coral);
             box-shadow: 0 0 0 3px rgba(19, 84, 62, 0.15);
         }
-
-        textarea.form-input {
-            resize: vertical;
-            min-height: 120px;
-        }
-
+        textarea.form-input { resize: vertical; min-height: 120px; }
         .submit-button {
             width: 100%;
             padding: 1rem;
@@ -248,13 +175,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
-
-        .submit-button:hover {
-            background-color: #b81034;
-            transform: translateY(-3px);
-        }
-
-        /* --- Header Section --- */
+        .submit-button:hover { background-color: #b81034; transform: translateY(-3px); }
         #site-header {
             background: rgba(12, 59, 46, 0.85);
             backdrop-filter: blur(12px);
@@ -267,7 +188,6 @@
             z-index: 1000;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -277,7 +197,6 @@
             justify-content: space-between;
             height: 80px;
         }
-
         .logo {
             display: flex;
             align-items: center;
@@ -286,11 +205,7 @@
             gap: 12px;
             text-decoration: none;
         }
-
-        .logo:hover {
-            transform: scale(1.05);
-        }
-
+        .logo:hover { transform: scale(1.05); }
         .logo-img {
             width: 45px;
             height: 45px;
@@ -300,7 +215,6 @@
             background: var(--color-white);
             padding: 4px;
         }
-
         .logo span {
             font-family: var(--font-logo);
             font-size: 24px;
@@ -308,13 +222,7 @@
             color: var(--color-white);
             letter-spacing: 0.5px;
         }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 40px;
-        }
-
+        nav ul { list-style: none; display: flex; gap: 40px; }
         nav ul li a {
             text-decoration: none;
             color: var(--color-white);
@@ -327,7 +235,6 @@
             align-items: center;
             gap: 8px;
         }
-
         nav ul li a::after {
             content: "";
             position: absolute;
@@ -338,15 +245,8 @@
             background: var(--color-beige-gold);
             transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-
-        nav ul li a:hover {
-            color: var(--color-beige-gold);
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-
+        nav ul li a:hover { color: var(--color-beige-gold); }
+        nav ul li a:hover::after { width: 100%; }
         .cta-btn {
             background: var(--color-beige-gold);
             color: var(--color-white);
@@ -360,20 +260,8 @@
             box-shadow: 0 4px 15px rgba(220, 20, 60, 0.2);
             text-decoration: none;
         }
-
-        .cta-btn:hover {
-            background: transparent;
-            color: var(--color-beige-gold);
-            transform: translateY(-2px);
-        }
-
-        .burger-menu {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 5px;
-        }
-
+        .cta-btn:hover { background: transparent; color: var(--color-beige-gold); transform: translateY(-2px); }
+        .burger-menu { display: none; flex-direction: column; cursor: pointer; gap: 5px; }
         .burger-line {
             width: 28px;
             height: 3px;
@@ -381,11 +269,9 @@
             border-radius: 3px;
             transition: all 0.3s ease-in-out;
         }
-
         .burger-menu.active .burger-line:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
         .burger-menu.active .burger-line:nth-child(2) { opacity: 0; }
         .burger-menu.active .burger-line:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
-
         .mobile-menu {
             position: fixed;
             top: 80px;
@@ -404,20 +290,8 @@
             transition: all 0.4s cubic-bezier(0.86, 0, 0.07, 1);
             z-index: 999;
         }
-
-        .mobile-menu.active {
-            transform: translateX(0);
-            visibility: visible;
-        }
-
-        .mobile-menu ul {
-            list-style: none;
-            flex-direction: column;
-            gap: 20px;
-            padding: 0;
-            text-align: center;
-        }
-
+        .mobile-menu.active { transform: translateX(0); visibility: visible; }
+        .mobile-menu ul { list-style: none; flex-direction: column; gap: 20px; padding: 0; text-align: center; }
         .mobile-menu ul li a {
             color: var(--color-white);
             text-decoration: none;
@@ -428,25 +302,15 @@
             align-items: center;
             gap: 12px;
         }
-
-        .mobile-cta {
-            margin-top: 40px;
-        }
-
-        /* --- Footer --- */
+        .mobile-cta { margin-top: 40px; }
         footer {
-            background: var(--color-primary);
+            background: var(--color-dark-accent);
             color: var(--color-white);
             padding: 2rem 1rem;
             text-align: center;
-            width: 100%; /* Ensure footer spans full width */
+            width: 100%;
         }
-
-        .footer-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
+        .footer-content { max-width: 800px; margin: 0 auto; }
         .footer-logo {
             font-family: var(--font-logo);
             font-size: 1.6rem;
@@ -456,36 +320,16 @@
             display: block;
             text-decoration: none;
         }
-
         .footer-content p {
             font-size: 0.9rem;
             line-height: 1.4;
             margin: 0 auto 15px;
             max-width: 600px;
         }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 15px 0;
-        }
-
-        .footer-links a {
-            color: var(--color-white);
-            font-size: 1.1rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--color-beige-gold);
-        }
-
-        .copyright {
-            margin-top: 10px;
-            color: rgba(248, 248, 248, 0.6);
-            font-size: 0.8rem;
-        }
+        .footer-links { display: flex; justify-content: center; gap: 15px; margin: 15px 0; }
+        .footer-links a { color: var(--color-white); font-size: 1.1rem; transition: color 0.3s ease; }
+        .footer-links a:hover { color: var(--color-beige-gold); }
+        .copyright { margin-top: 10px; color: rgba(248, 248, 248, 0.6); font-size: 0.8rem; }
 
         /* --- Responsive Design --- */
         @media (max-width: 992px) {
@@ -496,37 +340,47 @@
             .info-section {
                 text-align: center;
             }
+            /* === START: KEY CHANGE === */
             .contact-item {
-                align-items: center;
-                text-align: left;
+                flex-direction: column; /* Stack icon and details vertically */
+                align-items: center;   /* Center them horizontally */
+                text-align: center;    /* Center the text inside */
             }
+            .contact-item-icon {
+                margin-top: 0;
+                margin-bottom: 0.5rem; /* Add space below the icon */
+            }
+            /* === END: KEY CHANGE === */
             .social-links {
                 justify-content: center;
             }
         }
 
         @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
             main {
                 padding: 1rem;
             }
+            .contact-container {
+                flex-direction: column;
+            }
             .info-section, .form-section {
-                padding: 2rem;
+                padding: 2rem 1.5rem;
             }
             .info-title { font-size: 2rem; }
             .form-title { font-size: 1.8rem; }
-            nav, .cta-btn {
-                display: none;
-            }
-            .burger-menu {
-                display: flex;
-            }
-            .logo span {
-                font-size: 22px;
-            }
+            .nav-container { height: 70px; }
+            nav, .cta-btn { display: none; }
+            .burger-menu { display: flex; }
+            .logo span { font-size: 22px; }
+            .mobile-menu { top: 70px; height: calc(100vh - 70px); }
         }
     </style>
 </head>
 <body>
+    <!-- The rest of your HTML body remains exactly the same -->
     <header id="site-header">
       <div class="nav-container">
         <a href="/index.html" class="logo">
@@ -541,7 +395,7 @@
           </ul>
         </nav>
         <a href="/contact.html" class="cta-btn">Get in Touch</a>
-        <div class="burger-menu" onclick="toggleMobileMenu()">
+        <div class="burger-menu" onclick="toggleMobileMenu( )">
           <div class="burger-line"></div>
           <div class="burger-line"></div>
           <div class="burger-line"></div>
@@ -562,14 +416,12 @@
 
     <main>
         <div class="contact-container">
-            <!-- Info Section -->
             <section class="info-section">
                 <div class="logo-container">
                     <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760308204/upeCQf0mTnmn12zeUoggLA_jduicz.png" alt="Vinelora ArtArch Logo">
                 </div>
                 <h1 class="info-title">Let's Build <span>Together.</span></h1>
                 <p class="info-subtitle">We're here to turn your vision into a tangible masterpiece. Reach out and let the dialogue begin.</p>
-
                 <div class="contact-list">
                     <div class="contact-item">
                         <i class="contact-item-icon fa-solid fa-envelope"></i>
@@ -582,7 +434,7 @@
                         <i class="contact-item-icon fa-solid fa-phone"></i>
                         <div class="contact-item-details">
                             <h4>Call Us</h4>
-                            <p>+962 (078) 796-7253</p>
+                            <p>+962 (078 ) 796-7253</p>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -598,30 +450,24 @@
                     </div>
                 </div>
             </section>
-
-            <!-- Form Section -->
             <section class="form-section">
                 <div class="form-header">
                     <h2 class="form-title">Send a Message</h2>
                     <p class="form-description">Have a question or a project in mind? Drop us a line.</p>
                 </div>
-
                 <form action="https://formspree.io/f/xdkwnlqe" method="POST">
                     <div class="form-group">
                         <label for="name" class="form-label">Full Name</label>
                         <input type="text" id="name" name="name" class="form-input" required>
                     </div>
-                    
                     <div class="form-group">
                         <label for="email" class="form-label">Email Address</label>
                         <input type="email" id="email" name="email" class="form-input" required>
                     </div>
-                    
                     <div class="form-group">
                         <label for="message" class="form-label">Your Message</label>
                         <textarea id="message" name="message" class="form-input" rows="4" required></textarea>
                     </div>
-                    
                     <button type="submit" class="submit-button">Send Inquiry</button>
                 </form>
             </section>
@@ -631,30 +477,23 @@
     <footer id="contact-footer">
         <div class="footer-content">
             <a href="/" class="footer-logo">Vinelora ArtArch</a>
-            <p>
-                Creative portfolio showcasing the intersection of art and
-                architecture through innovative design and expression.
-            </p>
+            <p>Creative portfolio showcasing the intersection of art and architecture through innovative design and expression.</p>
             <div class="footer-links">
                 <a href="https://www.instagram.com/tasneem_shehab/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.facebook.com/rose.toto.9/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
                 <a href="https://www.linkedin.com/in/tasneem-abu-shehab-024341148/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
             </div>
-            <p class="copyright">
-                © 2025 Vinelora ArtArch. All rights reserved.
-            </p>
+            <p class="copyright">© 2025 Vinelora ArtArch. All rights reserved.</p>
         </div>
     </footer>
     
     <script>
-        // Mobile menu functions
         function toggleMobileMenu( ) {
             const burger = document.querySelector(".burger-menu");
             const mobileMenu = document.getElementById("mobileMenu");
             burger.classList.toggle("active");
             mobileMenu.classList.toggle("active");
         }
-
         function closeMobileMenu() {
             const burger = document.querySelector(".burger-menu");
             const mobileMenu = document.getElementById("mobileMenu");
