@@ -30,6 +30,91 @@
             overflow: hidden;
         }
 
+        /* --- حاوية لتنظيم العناصر --- */
+.gallery-container {
+    display: flex;
+    gap: 5px; /* مسافة بين الصور */
+    width: 100%;
+    max-width: 1200px;
+    margin: 40px auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden; 
+}
+
+/* --- التنسيق الأساسي والمشترك لكل جزء --- */
+.gallery-item {
+    flex: 1; /* كل عنصر يأخذ ثلث المساحة */
+    height: 450px; /* حدد الارتفاع المطلوب */
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.4s ease-in-out; /* تأثير حركة ناعم */
+
+    /* --- الإعدادات السحرية (هنا يتم تطبيق الصورة) --- */
+    background-image: url('https://res.cloudinary.com/dj4k75lkt/image/upload/v1760308217/1516633841377_x1gp02.jpg' );
+    background-size: 300% 100%; /* عرض الصورة 300% لتغطي 3 عناصر، وارتفاعها 100% */
+}
+
+/* --- تحديد موضع الخلفية لكل جزء --- */
+#item-part-1 {
+    background-position: left center; /* أو 0% 50% - يعرض الجزء الأيسر */
+}
+
+#item-part-2 {
+    background-position: center center; /* أو 50% 50% - يعرض الجزء الأوسط */
+}
+
+#item-part-3 {
+    background-position: right center; /* أو 100% 50% - يعرض الجزء الأيمن */
+}
+
+/* تأثير تكبير عند التمرير */
+.gallery-item:hover {
+    transform: scale(1.05);
+    z-index: 10; /* لجعل العنصر الذي يتم التمرير فوقه يظهر فوق العناصر الأخرى */
+}
+
+/* --- تنسيق الطبقة العلوية (Overlay) --- */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 10%, transparent 100%);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 20px;
+    transition: background 0.4s ease;
+}
+
+.overlay-title {
+    color: white;
+    font-size: 1.6rem;
+    font-family: 'Helvetica Neue', sans-serif;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    margin: 0;
+}
+
+/* --- تصميم متجاوب للهواتف --- */
+@media (max-width: 768px) {
+    .gallery-container {
+        flex-direction: column;
+        gap: 2px;
+    }
+    .gallery-item {
+        height: 250px;
+        /* عند العرض العمودي، يجب أن تظهر الصورة كاملة في كل جزء */
+        background-size: cover; /* تغيير حجم الخلفية */
+        background-position: center center !important; /* !important لضمان تطبيق هذا النمط */
+    }
+    .overlay-title {
+        font-size: 1.2rem;
+    }
+}
+
+
         /* --- Sidebar --- */
         .sidebar {
             width: 380px;
@@ -262,11 +347,10 @@
         <div class="gallery-grid">
             
             <!-- All 17 gallery items go here... -->
-            <div class="gallery-item" data-title="Mountain View Villa" data-category="Residential" data-description="A minimalist villa with clean lines and large glass windows, designed to frame the stunning mountain landscape.">
-                 <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760211269/image_2_kwkgku.webp" alt="Mountain View Villa">
-                <div class="overlay"><h3 class="overlay-title">Mountain View Villa</h3></div>
-            </div>
-            <div class="gallery-item" data-title="Urban Plaza & Fountain" data-category="Public Space" data-description="A vibrant public plaza featuring modern architecture, water fountains, and integrated seating areas for community gathering.">
+
+
+
+   <div class="gallery-item" data-title="Urban Plaza & Fountain" data-category="Public Space" data-description="A vibrant public plaza featuring modern architecture, water fountains, and integrated seating areas for community gathering.">
                  <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760211271/jkj_xrb1xl.jpg" alt="Urban Plaza & Fountain">
                 <div class="overlay"><h3 class="overlay-title">Urban Plaza & Fountain</h3></div>
             </div>
@@ -286,6 +370,91 @@
                  <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760211271/llk_fyppyk.jpg" alt="Art Deco Inspired Facade">
                 <div class="overlay"><h3 class="overlay-title">Art Deco Inspired Facade</h3></div>
             </div>
+ <!-- Image 1: Modern Kitchen -->
+<div class="gallery-item" 
+     data-title="Modern Blue Kitchen" 
+     data-category="Interior Design" 
+     data-description="A beautifully designed kitchen featuring light blue cabinetry, a white marble island, and elegant gold pendant lights.">
+    <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760802673/11_xrnmgc.jpg" alt="Modern Blue Kitchen">
+    <div class="overlay"><h3 class="overlay-title">Modern Blue Kitchen</h3></div>
+</div>
+
+<!-- Image 2: Sprawling Resort Complex -->
+<div class="gallery-item" 
+     data-title="Sprawling Resort Complex" 
+     data-category="Urban Planning" 
+     data-description="An aerial view of a large, modern resort or residential complex, showcasing multiple buildings, pools, and green spaces.">
+    <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760802671/27858218_10213294929159054_7024515462751920646_n_fgnteq.jpg" alt="Sprawling Resort Complex">
+    <div class="overlay"><h3 class="overlay-title">Sprawling Resort Complex</h3></div>
+</div>
+
+<!-- Image 3: Urban Towers -->
+<div class="gallery-item" 
+     data-title="Urban Towers Plaza" 
+     data-category="Commercial Architecture" 
+     data-description="A ground-level view of modern high-rise towers surrounding a central plaza with a unique water feature.">
+    <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760802672/FILE1295_vqw6is.jpg" alt="Urban Towers Plaza">
+    <div class="overlay"><h3 class="overlay-title">Urban Towers Plaza</h3></div>
+</div>
+
+<!-- Image 4: Residential Community Plan -->
+<div class="gallery-item" 
+     data-title="Residential Community Plan" 
+     data-category="Master Planning" 
+     data-description="A top-down architectural rendering of a residential community, detailing building layouts, roads, and green areas.">
+    <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760802670/kj.rvt_2018-Jun-04_12-39-37PM-000_3D_View_21_jpeg_rsjme5.jpg" alt="Residential Community Plan">
+    <div class="overlay"><h3 class="overlay-title">Residential Community Plan</h3></div>
+</div>
+
+<!-- Image 5: Twin High-Rise Towers -->
+<div class="gallery-item" 
+     data-title="Twin High-Rise Towers" 
+     data-category="Skyscraper Design" 
+     data-description="An architectural visualization of two identical high-rise residential towers against a clear blue sky.">
+    <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760802673/FILE1305_etkne6.jpg" alt="Twin High-Rise Towers">
+    <div class="overlay"><h3 class="overlay-title">Twin High-Rise Towers</h3></div>
+</div>
+
+<!-- Image 6: Kitchen Corner View -->
+<div class="gallery-item" 
+     data-title="Kitchen Corner View" 
+     data-category="Interior Detail" 
+     data-description="A corner view of a modern kitchen, focusing on the stainless steel stove, corner shelving, and marble countertop.">
+    <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760802671/3_dt4iwg.jpg" alt="Kitchen Corner View">
+    <div class="overlay"><h3 class="overlay-title">Kitchen Corner View</h3></div>
+</div>
+
+         
+<!-- الجزء الأول: الواجهة الهندسية -->
+<div class="gallery-item" id="item-part-1" 
+     data-title="Geometric Facade" 
+     data-category="Architectural Detail" 
+     data-description="A close-up of the building's striking diamond-patterned glass facade, reflecting modern design principles.">
+    <div class="overlay">
+        <h3 class="overlay-title">Geometric Facade</h3>
+    </div>
+</div>
+
+<!-- الجزء الثاني: الواجهة المنحنية -->
+<div class="gallery-item" id="item-part-2" 
+     data-title="Curved Glass Wall" 
+     data-category="Exterior View" 
+     data-description="The central part of the building, showcasing the elegant, curved glass wall flanked by palm trees.">
+    <div class="overlay">
+        <h3 class="overlay-title">Curved Glass Wall</h3>
+    </div>
+</div>
+
+<!-- الجزء الثالث: المدخل الرئيسي -->
+<div class="gallery-item" id="item-part-3" 
+     data-title="Main Entrance" 
+     data-category="Building Entry" 
+     data-description="The main entrance of the building, featuring an arched canopy and a welcoming, open design.">
+    <div class="overlay">
+        <h3 class="overlay-title">Main Entrance</h3>
+    </div>
+</div>
+
             <div class="gallery-item" data-title="Sprawling Medical Campus" data-category="Healthcare" data-description="An aerial view of a large, modern medical campus or hospital with a curved layout and multiple interconnected buildings.">
                  <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760211272/m_bencxl.jpg" alt="Sprawling Medical Campus">
                 <div class="overlay"><h3 class="overlay-title">Sprawling Medical Campus</h3></div>

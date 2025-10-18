@@ -23,7 +23,7 @@
 
         body {
             font-family: 'Georgia', 'Times New Roman', serif;
-            background: linear-gradient(135deg, var(--color-white ) 0%, #ede7d9 100%);
+            background: linear-gradient(135deg, var(--color-white  ) 0%, #ede7d9 100%);
             display: flex;
             height: 100vh;
             overflow: hidden;
@@ -118,16 +118,18 @@
 
         .gallery-wall {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 60px;
+            /* Changed to display 3 columns and adjusted gap */
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
             justify-items: center;
         }
 
-        /* --- Baroque Frame Style (Unchanged as requested) --- */
+        /* --- Baroque Frame Style --- */
         .painting-frame {
             position: relative;
-            width: 350px;
-            height: 450px;
+            width: 100%; /* Make frame responsive */
+            max-width: 350px; /* Set a max-width */
+            aspect-ratio: 350 / 450; /* Maintain aspect ratio */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -163,6 +165,7 @@
             width: 100%;
             height: 75%;
             object-fit: cover;
+            cursor: zoom-in; /* Add zoom-in cursor */
         }
 
         .gallery-label {
@@ -200,14 +203,43 @@
             text-align: center;
         }
 
+        /* --- Modal for Enlarged Image --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
         /* Responsive Design */
-        @media (max-width: 1200px) {
-            .sidebar {
-                width: 320px;
-                padding: 30px;
-            }
-            .artwork-info .info-title {
-                font-size: 2rem;
+        @media (max-width: 1400px) {
+            .gallery-wall {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns for medium screens */
             }
         }
 
@@ -225,31 +257,28 @@
                 text-align: center;
             }
             .artwork-info {
-                display: none; /* Hide sidebar project info on mobile for simplicity */
+                display: none;
             }
             .main-content {
                 height: auto;
                 padding: 30px 20px;
             }
-        }/* Responsive Fix for Mobile */
-@media (max-width: 768px) {
-    .main-content {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-    .gallery-wall {
-        display: flex;
-        flex-direction: column;
-        align-items: center; 
-        gap: 20px;
-    }
-    .painting-frame {
-        width: 100%;       
-        max-width: 350px;  
-        margin: 0 auto;   
-    }
-}
+             .gallery-wall {
+                grid-template-columns: 1fr; /* 1 column for small screens */
+            }
+        }
 
+        @media (max-width: 768px) {
+            .main-content {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            .painting-frame {
+                width: 100%;
+                max-width: 350px;
+                margin: 0 auto;
+            }
+        }
     </style>
 </head>
 <body>
@@ -282,9 +311,15 @@
         </div>
     </main>
 
+    <!-- Modal for displaying enlarged image -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const paintingsData = [
+                 const paintingsData = [
                 {
                     title: "Sufi's Dance",
                     medium: "Spiritual Art, Mixed Media",
@@ -337,7 +372,7 @@
     "title": "Portrait of an Elder",
     "medium": "Black and White Photography",
     "description": "A powerful black and white portrait capturing the detailed, wrinkled face of an elderly woman, conveying a sense of wisdom and a long life lived.",
-    "imageUrl": "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760306735/26ade740eb87ac93c7b9a95cedeabf5e_qhwcxg.jpg"
+    "imageUrl": "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760800235/IMG_%D9%A2%D9%A0%D9%A2%D9%A1%D9%A0%D9%A2%D9%A0%D9%A6_%D9%A1%D9%A1%D9%A3%D9%A0%D9%A5%D9%A8_sf8wjk.jpg"
 }
 ,
               
@@ -345,7 +380,7 @@
         "title": "Chromatic Lion",
         "medium": "Digital Art, Painting",
         "description": "A vibrant, multicolored portrait of a lion's face, blending bold and expressive colors in a pop art style.",
- "imageUrl": "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760306690/361898c64999439d48c959b21e0ce781_bqq5gx.jpg"    },
+ "imageUrl": "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760800229/IMG_20201225_145010_966_hpnsby.jpg"    },
     {
         "title": "Dome of the Rock",
         "medium": "Embroidery, Mixed Media",
@@ -372,17 +407,89 @@
         "medium": "Ink Sketch, Drawing",
         "description": "A black and white ink drawing of a woman in traditional attire, carrying a basket of goods on her head.",
  "imageUrl": "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760306736/PicsArt_05-28-04.47.03_tcmywb.jpg"    }
+,
+  {
+        title: "Blue Poppy",
+        medium: "Floral Art, Digital Painting",
+        description: "A vibrant digital painting of a blue poppy, symbolizing dreams and imagination, set against a textured gold background.",
+        imageUrl: "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760800222/WhatsApp_Image_2025-10-18_at_4.07.34_PM_e37uok.jpg"
+    },
+    {
+        title: "Azure Butterflies",
+        medium: "Nature Art, Mixed Media",
+        description: "Two brilliant blue butterflies captured in mid-flight, crafted with glittering details that evoke a sense of magic and freedom.",
+        imageUrl: "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760800221/WhatsApp_Image_2025-10-18_at_4.07.22_PM_rsfdwr.jpg"
+    },
+    {
+        title: "Cerulean Feather",
+        medium: "Abstract, Glitter Art",
+        description: "An elegant, detailed feather rendered in shades of blue and gold glitter, representing lightness and spiritual ascension.",
+        imageUrl: "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760800224/WhatsApp_Image_2025-10-18_at_4.07.21_PM_t9ikw7.jpg"
+    },
+    {
+        title: "Man in Sunglasses",
+        medium: "Portrait, Black and White Sketch",
+        description: "A classic black and white sketch of a man wearing sunglasses, capturing a cool and timeless aesthetic.",
+        imageUrl: "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760800230/IMG_20201220_150600_991_dz0r7u.jpg"
+    },
+    {
+        title: "Candid Smile",
+        medium: "Portrait, Black and White",
+        description: "A candid black and white portrait of a young man with a gentle smile, conveying warmth and approachability.",
+        imageUrl: "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760800230/IMG_20211221_113019_845_len1jp.webp"
+    },
+    {
+        title: "Mosque at Sunset",
+        medium: "Architectural Sketch, Ink & Watercolor",
+        description: "An atmospheric depiction of a grand mosque against a warm, watercolored sunset, evoking a sense of peace and spirituality.",
+                imageUrl: "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760306769/IMG_20201230_005643_367_dajjd7.jpg"
 
+    },
+    {
+        title: "Pensive Gaze",
+        medium: "Portrait, Pointillism Sketch",
+        description: "An ink sketch of an ancient stone archway, placed over a background of old newspaper, blending history and art.",
+        imageUrl: "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760800234/IMG_20210130_153744_767_zyyyck.jpg"
+    },
+    {
+        title: "Victorian era ",
+        medium: "Architectural Sketch, Ink on Paper",
+                description: "A striking portrait of a man with a beard, created using a pointillism technique that adds texture and emotional depth.",
 
+        imageUrl: "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760800235/IMG_20210405_130059_635_an34zs.jpg"
+    },
+    {
+        title: "The Queen's Gambit",
+        medium: "Portrait, Black and White Sketch",
+        description: "A compelling black and white sketch inspired by 'The Queen's Gambit,' capturing the character's intense focus and intellect.",
+        imageUrl: "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760800225/IMG_%D9%A2%D9%A0%D9%A2%D9%A1%D9%A0%D9%A1%D9%A2%D9%A1_%D9%A1%D9%A4%D9%A3%D9%A4%D9%A2%D9%A3_zbbqfo.jpg"
+    },
+    {
+        title: "The Old Souk",
+        medium: "Architectural Art, Mixed Media",
+        description: "A detailed illustration of a bustling old-world market (souk ), rich with architectural details and vibrant life.",
+                imageUrl: "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760800232/WhatsApp_Image_2025-10-18_at_4.07.40_PM_vnsdnh.jpg"
+
+    },
+    {
+        title: "Ocean Gaze",
+        medium: "Hyperrealistic Art, Colored Pencil",
+        description: "A hyperrealistic drawing of a human eye, with intricate details in the iris that reflect a universe of color and emotion.",
+        imageUrl: "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760800226/IMG_%D9%A2%D9%A0%D9%A2%D9%A0%D9%A1%D9%A0%D9%A0%D9%A3_%D9%A1%D9%A6%D9%A0%D9%A1%D9%A1%D9%A3_ev4z7s.jpg"
+    }
             ];
 
-            const galleryWall = document.getElementById('gallery-wall');
+            const galleryWall = document.getElementById('gallery-wall' );
             const infoTitleEl = document.getElementById('info-title');
             const infoCategoryEl = document.getElementById('info-category');
             const infoDescriptionEl = document.getElementById('info-description');
             const artworkDetailsPanel = document.getElementById('artwork-details-panel');
 
-            // Function to render all paintings
+            // Modal elements
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("modalImage");
+            const closeModal = document.querySelector(".close-modal");
+
             function renderPaintings() {
                 if (!galleryWall) return;
                 galleryWall.innerHTML = '';
@@ -405,20 +512,19 @@
                             </div>
                         </div>
                     `;
-                    galleryWall.innerHTML += paintingHTML;
+                    galleryWall.insertAdjacentHTML('beforeend', paintingHTML );
                 });
             }
 
-            // Function to handle interactions
             function addGalleryInteractions() {
                 document.querySelectorAll('.painting-frame').forEach(frame => {
+                    // Update details on hover
                     frame.addEventListener('mouseenter', () => {
                         const title = frame.getAttribute('data-title');
                         const medium = frame.getAttribute('data-medium');
                         const description = frame.getAttribute('data-description');
 
                         artworkDetailsPanel.style.opacity = 0;
-
                         setTimeout(() => {
                             infoTitleEl.textContent = title;
                             infoCategoryEl.textContent = medium;
@@ -426,10 +532,28 @@
                             artworkDetailsPanel.style.opacity = 1;
                         }, 300);
                     });
+
+                    // Open modal on image click
+                    const artworkImage = frame.querySelector('.artwork-image');
+                    artworkImage.addEventListener('click', (e) => {
+                        e.stopPropagation(); // Prevent hover event from firing
+                        modal.style.display = "flex";
+                        modalImg.src = artworkImage.src;
+                    });
                 });
+
+                // Close modal events
+                closeModal.onclick = () => {
+                    modal.style.display = "none";
+                }
+
+                window.onclick = (event) => {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
             }
 
-            // Initial setup
             renderPaintings();
             addGalleryInteractions();
         });
