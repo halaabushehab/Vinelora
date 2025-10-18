@@ -6,15 +6,17 @@
     <title>Architectural Works | Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* --- المتغيرات العامة والألوان --- */
         :root {
             --color-white: #f8f8f8;
             --color-dark-gray: #1f2223;
-            --color-coral: #13543E; /* Main Green */
+            --color-coral: #13543E;       /* Main Green */
             --color-beige-gold: #dc143c; /* Hover Red */
             --color-light-accent: #2A7F62;
-            --color-dark-accent: #0C3B2E; /* Darkest Green */
+            --color-dark-accent: #0C3B2E;  /* Darkest Green */
         }
 
+        /* --- إعدادات أساسية --- */
         * {
             margin: 0;
             padding: 0;
@@ -30,92 +32,7 @@
             overflow: hidden;
         }
 
-        /* --- حاوية لتنظيم العناصر --- */
-.gallery-container {
-    display: flex;
-    gap: 5px; /* مسافة بين الصور */
-    width: 100%;
-    max-width: 1200px;
-    margin: 40px auto;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    overflow: hidden; 
-}
-
-/* --- التنسيق الأساسي والمشترك لكل جزء --- */
-.gallery-item {
-    flex: 1; /* كل عنصر يأخذ ثلث المساحة */
-    height: 450px; /* حدد الارتفاع المطلوب */
-    position: relative;
-    cursor: pointer;
-    transition: transform 0.4s ease-in-out; /* تأثير حركة ناعم */
-
-    /* --- الإعدادات السحرية (هنا يتم تطبيق الصورة) --- */
-    background-image: url('https://res.cloudinary.com/dj4k75lkt/image/upload/v1760308217/1516633841377_x1gp02.jpg' );
-    background-size: 300% 100%; /* عرض الصورة 300% لتغطي 3 عناصر، وارتفاعها 100% */
-}
-
-/* --- تحديد موضع الخلفية لكل جزء --- */
-#item-part-1 {
-    background-position: left center; /* أو 0% 50% - يعرض الجزء الأيسر */
-}
-
-#item-part-2 {
-    background-position: center center; /* أو 50% 50% - يعرض الجزء الأوسط */
-}
-
-#item-part-3 {
-    background-position: right center; /* أو 100% 50% - يعرض الجزء الأيمن */
-}
-
-/* تأثير تكبير عند التمرير */
-.gallery-item:hover {
-    transform: scale(1.05);
-    z-index: 10; /* لجعل العنصر الذي يتم التمرير فوقه يظهر فوق العناصر الأخرى */
-}
-
-/* --- تنسيق الطبقة العلوية (Overlay) --- */
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 10%, transparent 100%);
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    padding: 20px;
-    transition: background 0.4s ease;
-}
-
-.overlay-title {
-    color: white;
-    font-size: 1.6rem;
-    font-family: 'Helvetica Neue', sans-serif;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
-    margin: 0;
-}
-
-/* --- تصميم متجاوب للهواتف --- */
-@media (max-width: 768px) {
-    .gallery-container {
-        flex-direction: column;
-        gap: 2px;
-    }
-    .gallery-item {
-        height: 250px;
-        /* عند العرض العمودي، يجب أن تظهر الصورة كاملة في كل جزء */
-        background-size: cover; /* تغيير حجم الخلفية */
-        background-position: center center !important; /* !important لضمان تطبيق هذا النمط */
-    }
-    .overlay-title {
-        font-size: 1.2rem;
-    }
-}
-
-
-        /* --- Sidebar --- */
+        /* --- الشريط الجانبي (Sidebar) --- */
         .sidebar {
             width: 380px;
             height: 100%;
@@ -125,8 +42,8 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            z-index: 10;
-            flex-shrink: 0; /* <<< مهم: يمنع الشريط الجانبي من التقلص */
+            z-index: 20;
+            flex-shrink: 0;
         }
 
         .sidebar-header .logo {
@@ -185,7 +102,7 @@
             color: var(--color-beige-gold);
         }
 
-        /* --- Main Content --- */
+        /* --- المحتوى الرئيسي (Main Content) --- */
         .main-content {
             flex-grow: 1;
             height: 100vh;
@@ -193,27 +110,29 @@
             padding: 40px;
         }
 
+        /* --- تنسيق شبكة المعرض (Gallery Grid) --- */
         .gallery-grid {
             display: grid;
-            /* === التعديل الرئيسي هنا === */
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 30px;
         }
 
+        /* --- تنسيق عناصر المعرض (Gallery Items) --- */
         .gallery-item {
             position: relative;
             overflow: hidden;
             cursor: pointer;
             border-radius: 4px;
             aspect-ratio: 3 / 4;
+            background-color: #eee;
         }
-
+        
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .gallery-item:hover img {
@@ -226,7 +145,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to top, rgba(12, 59, 46, 0.7) 0%, rgba(0,0,0,0) 50%);
+            background: linear-gradient(to top, rgba(12, 59, 46, 0.7) 0%, rgba(0,0,0,0) 60%);
             opacity: 0;
             transition: opacity 0.4s ease;
             display: flex;
@@ -251,8 +170,32 @@
             transform: translateY(0);
             opacity: 1;
         }
+        
+        /* --- تنسيق خاص بالصورة المقسمة (Triptych) --- */
+        .triptych-item img {
+            width: 300%; /* عرض الصورة 3 أضعاف الحاوية */
+            position: absolute;
+            top: 0;
+        }
+        
+        .triptych-item .overlay {
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 10%, transparent 100%);
+            opacity: 1; /* إظهار الطبقة بشكل دائم */
+        }
+        
+        .triptych-item .overlay-title {
+            transform: translateY(0);
+            opacity: 1;
+            font-family: 'Helvetica Neue', sans-serif;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
 
-        /* --- Lightbox Styles --- */
+        /* تحديد موضع كل جزء من الصورة المقسمة */
+        #item-part-1 img { left: 0; }
+        #item-part-2 img { left: -100%; }
+        #item-part-3 img { left: -200%; }
+
+        /* --- نافذة عرض الصور (Lightbox) --- */
         .lightbox {
             position: fixed;
             top: 0;
@@ -304,7 +247,7 @@
             transform: scale(1.2) rotate(90deg);
         }
 
-        /* Responsive Design */
+        /* --- تصميم متجاوب (Responsive Design) --- */
         @media (max-width: 1200px) {
             .sidebar { width: 320px; padding: 30px; }
             .project-info .project-title { font-size: 2rem; }
@@ -324,31 +267,29 @@
 </head>
 <body>
 
-    <!-- Sidebar -->
+    <!-- الشريط الجانبي -->
     <aside class="sidebar">
         <div class="sidebar-header">
             <a href="#" class="logo">ARCH-ART</a>
             <p class="tagline">Crafting spaces that inspire. Hover over a project to see details.</p>
         </div>
         <div id="project-details" class="project-info">
-            <h2 id="project-title">Mountain View Villa</h2>
-            <p id="project-category">Residential</p>
-            <p id="project-description">A minimalist villa with clean lines and large glass windows, designed to frame the stunning mountain landscape.</p>
+            <h2 id="project-title">Select a Project</h2>
+            <p id="project-category">Details will appear here</p>
+            <p id="project-description"></p>
         </div>
         <div class="sidebar-footer">
             <div class="nav-link">
-                <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Home</a>
+                <a href="#"><i class="fas fa-arrow-left"></i> Back to Home</a>
             </div>
         </div>
     </aside>
 
-    <!-- Main Content -->
+    <!-- المحتوى الرئيسي -->
     <main class="main-content">
         <div class="gallery-grid">
             
-            <!-- All 17 gallery items go here... -->
-
-
+     
 
    <div class="gallery-item" data-title="Urban Plaza & Fountain" data-category="Public Space" data-description="A vibrant public plaza featuring modern architecture, water fountains, and integrated seating areas for community gathering.">
                  <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760211271/jkj_xrb1xl.jpg" alt="Urban Plaza & Fountain">
@@ -380,13 +321,13 @@
 </div>
 
 <!-- Image 2: Sprawling Resort Complex -->
-<div class="gallery-item" 
+<!-- <div class="gallery-item" 
      data-title="Sprawling Resort Complex" 
      data-category="Urban Planning" 
      data-description="An aerial view of a large, modern resort or residential complex, showcasing multiple buildings, pools, and green spaces.">
     <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760802671/27858218_10213294929159054_7024515462751920646_n_fgnteq.jpg" alt="Sprawling Resort Complex">
     <div class="overlay"><h3 class="overlay-title">Sprawling Resort Complex</h3></div>
-</div>
+</div> -->
 
 <!-- Image 3: Urban Towers -->
 <div class="gallery-item" 
@@ -396,7 +337,10 @@
     <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760802672/FILE1295_vqw6is.jpg" alt="Urban Towers Plaza">
     <div class="overlay"><h3 class="overlay-title">Urban Towers Plaza</h3></div>
 </div>
-
+ <div class="gallery-item" data-title="Classic White Residence" data-category="Residential" data-description="An elegant white two-story home with spacious balconies, a tiled entryway, and classic architectural details.">
+                 <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760211273/re_qbnqmf.jpg" alt="Classic White Residence">
+                <div class="overlay"><h3 class="overlay-title">Classic White Residence</h3></div>
+            </div>
 <!-- Image 4: Residential Community Plan -->
 <div class="gallery-item" 
      data-title="Residential Community Plan" 
@@ -424,41 +368,24 @@
     <div class="overlay"><h3 class="overlay-title">Kitchen Corner View</h3></div>
 </div>
 
-         
-<!-- الجزء الأول: الواجهة الهندسية -->
-<div class="gallery-item" id="item-part-1" 
-     data-title="Geometric Facade" 
-     data-category="Architectural Detail" 
-     data-description="A close-up of the building's striking diamond-patterned glass facade, reflecting modern design principles.">
-    <div class="overlay">
-        <h3 class="overlay-title">Geometric Facade</h3>
-    </div>
-</div>
-
-<!-- الجزء الثاني: الواجهة المنحنية -->
-<div class="gallery-item" id="item-part-2" 
-     data-title="Curved Glass Wall" 
-     data-category="Exterior View" 
-     data-description="The central part of the building, showcasing the elegant, curved glass wall flanked by palm trees.">
-    <div class="overlay">
-        <h3 class="overlay-title">Curved Glass Wall</h3>
-    </div>
-</div>
-
-<!-- الجزء الثالث: المدخل الرئيسي -->
-<div class="gallery-item" id="item-part-3" 
-     data-title="Main Entrance" 
-     data-category="Building Entry" 
-     data-description="The main entrance of the building, featuring an arched canopy and a welcoming, open design.">
-    <div class="overlay">
-        <h3 class="overlay-title">Main Entrance</h3>
-    </div>
-</div>
-
-            <div class="gallery-item" data-title="Sprawling Medical Campus" data-category="Healthcare" data-description="An aerial view of a large, modern medical campus or hospital with a curved layout and multiple interconnected buildings.">
+     <div class="gallery-item" data-title="Sprawling Medical Campus" data-category="Healthcare" data-description="An aerial view of a large, modern medical campus or hospital with a curved layout and multiple interconnected buildings.">
                  <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760211272/m_bencxl.jpg" alt="Sprawling Medical Campus">
                 <div class="overlay"><h3 class="overlay-title">Sprawling Medical Campus</h3></div>
+            </div>      
+   <!-- عناصر الصورة المقسمة (Triptych ) -->
+            <div class="gallery-item triptych-item" id="item-part-1" data-title="Geometric Facade" data-category="Architectural Detail" data-description="A close-up of the building's striking diamond-patterned glass facade.">
+                <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760308217/1516633841377_x1gp02.jpg" alt="Geometric Facade">
+                <div class="overlay"><h3 class="overlay-title">Geometric Facade</h3></div>
             </div>
+            <div class="gallery-item triptych-item" id="item-part-2" data-title="Curved Glass Wall" data-category="Exterior View" data-description="The central part of the building, showcasing the elegant, curved glass wall.">
+                <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760308217/1516633841377_x1gp02.jpg" alt="Curved Glass Wall">
+                <div class="overlay"><h3 class="overlay-title">Curved Glass Wall</h3></div>
+            </div>
+            <div class="gallery-item triptych-item" id="item-part-3" data-title="Main Entrance" data-category="Building Entry" data-description="The main entrance of the building, featuring an arched canopy.">
+                <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760308217/1516633841377_x1gp02.jpg" alt="Main Entrance">
+                <div class="overlay"><h3 class="overlay-title">Main Entrance</h3></div>
+            </div>
+
             <div class="gallery-item" data-title="Stone & Crimson Villa" data-category="Residential" data-description="A stylish villa combining textured stone walls with bold crimson stripes and multiple balconies for outdoor living.">
                  <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760211270/def_gmjt44.jpg" alt="Stone & Crimson Villa">
                 <div class="overlay"><h3 class="overlay-title">Stone & Crimson Villa</h3></div>
@@ -467,10 +394,7 @@
                  <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760211273/nmnmm_bdxa1k.jpg" alt="Traditional Courtyard Wall">
                 <div class="overlay"><h3 class="overlay-title">Traditional Courtyard Wall</h3></div>
             </div>
-            <div class="gallery-item" data-title="Classic White Residence" data-category="Residential" data-description="An elegant white two-story home with spacious balconies, a tiled entryway, and classic architectural details.">
-                 <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760211273/re_qbnqmf.jpg" alt="Classic White Residence">
-                <div class="overlay"><h3 class="overlay-title">Classic White Residence</h3></div>
-            </div>
+           
             <div class="gallery-item" data-title="Floating House Section" data-category="Conceptual" data-description="An architectural section drawing illustrating a conceptual house that appears to float above a subterranean water feature.">
                  <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760211304/Scene_1_1_yz43u3.png" alt="Floating House Section">
                 <div class="overlay"><h3 class="overlay-title">Floating House Section</h3></div>
@@ -503,7 +427,7 @@
         </div>
     </main>
 
-    <!-- Lightbox HTML -->
+    <!-- نافذة عرض الصور (Lightbox ) -->
     <div class="lightbox" id="lightbox">
         <span class="close-btn" id="close-lightbox">&times;</span>
         <img src="" alt="Enlarged view" id="lightbox-img">
@@ -516,10 +440,14 @@
             const projectCategoryEl = document.getElementById('project-category');
             const projectDescriptionEl = document.getElementById('project-description');
             const projectDetailsContainer = document.getElementById('project-details');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const closeBtn = document.getElementById('close-lightbox');
 
-            // Sidebar hover effect
             galleryItems.forEach(item => {
+                // تأثير المرور على الشريط الجانبي (يعمل على كل العناصر)
                 item.addEventListener('mouseenter', () => {
+                    if (!projectDetailsContainer) return;
                     const title = item.getAttribute('data-title');
                     const category = item.getAttribute('data-category');
                     const description = item.getAttribute('data-description');
@@ -531,28 +459,28 @@
                         projectDetailsContainer.style.opacity = 1;
                     }, 300);
                 });
-            });
 
-            // Lightbox functionality
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const closeBtn = document.getElementById('close-lightbox');
-
-            galleryItems.forEach(item => {
+                // وظيفة نافذة عرض الصور (تعمل على كل العناصر)
                 item.addEventListener('click', () => {
-                    const imgSrc = item.querySelector('img').src;
-                    lightboxImg.src = imgSrc;
-                    lightbox.classList.add('active');
+                    // ابحث عن وسم <img> داخل العنصر الذي تم النقر عليه
+                    const imgElement = item.querySelector('img');
+                    if (imgElement) {
+                        const imgSrc = imgElement.src;
+                        lightboxImg.src = imgSrc;
+                        lightbox.classList.add('active');
+                    }
                 });
             });
 
-            closeBtn.addEventListener('click', () => {
+            // إغلاق نافذة عرض الصور
+            function closeLightbox() {
                 lightbox.classList.remove('active');
-            });
+            }
 
+            closeBtn.addEventListener('click', closeLightbox);
             lightbox.addEventListener('click', (e) => {
                 if (e.target === lightbox) {
-                    lightbox.classList.remove('active');
+                    closeLightbox();
                 }
             });
         });
