@@ -853,15 +853,14 @@ nav ul li a:hover i {
             color: var(--color-white);
         }
 
-        .portfolio-category {
-            font-size: 0.8rem;
-            color: var(--color-beige-gold);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 8px;
-        }
-
+.portfolio-category {
+    font-size: 0.9rem;
+color: var(--color-beige-gold);    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+}
         .portfolio-title {
             font-size: 1.6rem;
             font-weight: 700;
@@ -1457,3 +1456,273 @@ footer {
         }
 
         /* Cta================================================= */
+/* ========================================================= */
+/* Portfolio Hero Cards Redesign */
+/* ========================================================= */
+
+.hero-cards-style {
+    padding: 90px 0 80px;
+ }
+
+.hero-cards-style .hero-title {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 700;
+    color: var(--color-dark-accent);
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.hero-cards-style .hero-subtitle {
+    text-align: center;
+    font-size: 1.08rem;
+    color: #6b746f;
+    margin-bottom: 22px;
+}
+
+.hero-cards-style .section-divider {
+    width: 90px;
+    height: 4px;
+    margin: 0 auto 35px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--color-coral), var(--color-beige-gold));
+}
+
+.hero-cards-style .category-filter {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+}
+
+.hero-cards-style .filter-btn {
+    padding: 10px 22px;
+    background: transparent;
+    border: 1.5px solid var(--color-coral);
+    color: var(--color-coral);
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hero-cards-style .filter-btn.active,
+.hero-cards-style .filter-btn:hover {
+    background: var(--color-coral);
+    color: var(--color-white);
+}
+
+.portfolio-grid-featured {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-bottom: 0;
+}
+
+.feature-card {
+    position: relative;
+    min-height: 320px;
+    border-radius: 28px;
+    overflow: hidden;
+    isolation: isolate;
+    cursor: pointer;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.10);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    background: #000;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 34px rgba(0, 0, 0, 0.14);
+}
+
+.feature-card .portfolio-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(0.2px) brightness(0.82);
+    transform: scale(1.06);
+    transition: filter 0.45s ease, transform 0.45s ease;
+}
+
+.feature-card:hover .portfolio-img {
+    filter: blur(0) brightness(1);
+    transform: scale(1.03);
+}
+
+.feature-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(19, 84, 62, 0.18); /* أخضر من هوية الموقع */
+    transition: background 0.4s ease;
+}
+
+.feature-card:hover .feature-overlay {
+    background: rgba(0, 0, 0, 0.18);
+}
+/* فقط طبقة خفيفة للصورة بدون بوكس */
+.feature-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.08) 0%,
+        rgba(0, 0, 0, 0.12) 35%,
+        rgba(0, 0, 0, 0.50) 100%
+    );
+}
+
+/* الأيقونات */
+/* الأيقونات */
+.feature-icon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    z-index: 3;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.14);
+}
+
+/* ألوان الدوائر */
+.icon-art {
+    background: #2A9D8F;
+}
+
+.icon-architecture {
+    background: #13543E;
+}
+
+.icon-craft {
+    background: #DC143C;
+}
+
+ 
+
+/* بدون بوكس أسود */
+.feature-card .feature-content {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+    z-index: 3;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+    background: transparent;
+    backdrop-filter: none;
+}
+
+ 
+
+.feature-card .portfolio-title {
+    font-size: 1.55rem;
+    line-height: 1.15;
+    margin-bottom: 10px;
+    color: #fff;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.feature-card .portfolio-description {
+    font-size: 0.96rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.90);
+    margin-bottom: 16px;
+    max-width: 92%;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+}
+
+.explore-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 104px;
+    height: 42px;
+    padding: 0 18px;
+    border-radius: 12px;
+    border: 1.2px solid rgba(255, 255, 255, 0.88);
+    color: #fff;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.06);
+    transition: 0.3s ease;
+    text-decoration: none;
+}
+
+.feature-card:hover .explore-btn {
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--color-dark-accent);
+    border-color: rgba(255, 255, 255, 0.92);
+}
+
+.portfolio-grid-featured .portfolio-item[style*="display: none"] {
+    display: none !important;
+}
+
+@media (max-width: 1100px) {
+    .portfolio-grid-featured {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-card {
+        min-height: 320px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-cards-style {
+        padding: 70px 0 60px;
+    }
+
+    .feature-card {
+        min-height: 290px;
+        border-radius: 22px;
+    }
+
+    .feature-card .portfolio-title {
+        font-size: 1.35rem;
+    }
+
+    .feature-card .portfolio-description {
+        font-size: 0.92rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .feature-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 0.92rem;
+        top: 16px;
+        left: 16px;
+    }
+
+    .feature-card .feature-content {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+    }
+
+    .feature-card .portfolio-title {
+        font-size: 1.2rem;
+    }
+
+    .explore-btn {
+        min-width: 94px;
+        height: 40px;
+        border-radius: 10px;
+    }
+}

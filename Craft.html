@@ -1,1080 +1,1401 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Architectural Models | Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
-        /* --- Root Variables --- */
-        :root {
-            --color-white: #f8f8f8;
-            --color-dark-gray: #1f2223;
-            --color-coral: #13543E;
-            --color-light-accent: #2A7F62;
-            --color-dark-accent: #0C3B2E;
-            --color-beige-bg: #ede7d9;
-        }
+      /* --- Root Variables --- */
+      :root {
+        --color-white: #f8f8f8;
+        --color-dark-gray: #1f2223;
+        --color-coral: #13543e;
+        --color-light-accent: #2a7f62;
+        --color-dark-accent: #0c3b2e;
+        --color-beige-bg: #ede7d9;
+      }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            background: linear-gradient(135deg, var(--color-white ) 0%, var(--color-beige-bg) 100%);
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
+      body {
+        font-family: "Georgia", "Times New Roman", serif;
+        background: linear-gradient(
+          135deg,
+          var(--color-white) 0%,
+          var(--color-beige-bg) 100%
+        );
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+      }
+      .zoom-hint {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        z-index: 6;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(12, 59, 46, 0.78);
+        color: #fff;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+        transition:
+          transform 0.25s ease,
+          background 0.25s ease;
+      }
 
-        /* --- Sidebar --- */
+      .model-card:hover .zoom-hint {
+        transform: scale(1.08);
+        background: rgba(12, 59, 46, 0.92);
+      }
+      /* --- Sidebar --- */
+      .sidebar {
+        width: 380px;
+        height: 100%;
+        background-color: var(--color-white);
+        border-right: 1px solid rgba(19, 84, 62, 0.2);
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        z-index: 10;
+        flex-shrink: 0;
+      }
+      .sidebar-header .logo {
+        font-size: 2.2rem;
+        font-weight: 700;
+        background: linear-gradient(
+          135deg,
+          var(--color-coral),
+          var(--color-light-accent)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-decoration: none;
+        letter-spacing: 2px;
+      }
+      .sidebar-header .tagline {
+        font-size: 1rem;
+        color: var(--color-dark-gray);
+        margin-top: 10px;
+        line-height: 1.5;
+      }
+      .model-info {
+        transition: opacity 0.4s ease;
+      }
+      .model-info .info-title {
+        font-size: 2.5rem;
+        font-weight: 500;
+        color: var(--color-dark-accent);
+        margin-bottom: 10px;
+        line-height: 1.2;
+        font-style: italic;
+      }
+      .model-info .info-category {
+        font-size: 1rem;
+        color: var(--color-coral);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+      .model-info .info-description {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.7;
+      }
+      .sidebar-footer .nav-link a {
+        color: var(--color-dark-gray);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.4s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 30px;
+        border: 2px solid var(--color-coral);
+        border-radius: 50px;
+      }
+      .sidebar-footer .nav-link a:hover {
+        color: white;
+        background-color: var(--color-coral);
+      }
+
+      /* --- Main Content --- */
+      .main-content {
+        flex-grow: 1;
+        height: 100vh;
+        overflow-y: auto;
+        padding: 40px;
+      }
+      .gallery-wall {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 40px;
+      }
+
+      /* --- Card Design --- */
+      .model-card {
+        background-color: var(--color-white);
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        transition:
+          transform 0.4s ease,
+          box-shadow 0.4s ease;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .model-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 35px rgba(19, 84, 62, 0.15);
+      }
+
+      /* Image Container */
+      .image-container {
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+      }
+      .model-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition:
+          transform 0.5s ease,
+          opacity 0.3s ease;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+      }
+      .model-image.active {
+        opacity: 1;
+        z-index: 2;
+      }
+      .model-card:hover .model-image.active {
+        transform: scale(1.05);
+      }
+      .card-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        z-index: 5;
+        padding: 0 10px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .model-card:hover .card-nav {
+        opacity: 1;
+      }
+      .card-nav-btn {
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .card-nav-btn:hover {
+        background: rgba(0, 0, 0, 0.8);
+      }
+
+      .gallery-badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 6;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(12, 59, 46, 0.82);
+        color: white;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+      }
+
+      .gallery-badge i {
+        font-size: 0.85rem;
+      }
+
+      .card-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        z-index: 5;
+        padding: 0 10px;
+        opacity: 0.55; /* بدل ما تكون مخفية تمامًا */
+        transition: opacity 0.3s ease;
+      }
+
+      .model-card:hover .card-nav {
+        opacity: 1;
+      }
+
+      .card-nav-btn {
+        background: rgba(12, 59, 46, 0.55);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 34px;
+        height: 34px;
+        cursor: pointer;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        transition: all 0.25s ease;
+      }
+
+      .card-nav-btn:hover {
+        background: rgba(12, 59, 46, 0.9);
+        transform: scale(1.08);
+      }
+
+      .card-dots {
+        position: absolute;
+        bottom: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 6;
+        display: flex;
+        gap: 5px;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+
+      .model-card:hover .card-dots {
+        opacity: 1;
+      }
+
+      .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.32);
+        transition: all 0.25s ease;
+      }
+
+      .dot.active {
+        background: rgba(255, 255, 255, 0.9);
+        transform: scale(1.15);
+      }
+
+      .model-card:hover .card-dots {
+        opacity: 1;
+      }
+      .dot {
+        width: 5px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.32);
+      }
+
+      .dot.active {
+        background: rgba(255, 255, 255, 0.88);
+      }
+
+      /* Card Content */
+      .card-content {
+        padding: 20px;
+        text-align: center;
+        flex-grow: 1;
+        border-top: 1px solid #f0f0f0;
+      }
+      .model-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--color-dark-accent);
+        margin-bottom: 8px;
+        font-style: italic;
+      }
+      .model-material {
+        font-size: 1rem;
+        color: var(--color-coral);
+        font-weight: 500;
+      }
+
+      /* --- Lightbox Styles --- */
+      .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.4s ease,
+          visibility 0.4s ease;
+        padding: 2rem;
+      }
+      .lightbox.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .lightbox img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+      }
+
+      .lightbox .close-btn {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        font-size: 2rem;
+        color: var(--color-white);
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+      .lightbox .close-btn:hover {
+        transform: scale(1.2) rotate(90deg);
+      }
+
+      /* --- Responsive Design --- */
+      @media (max-width: 1200px) {
         .sidebar {
-            width: 380px;
-            height: 100%;
-            background-color: var(--color-white);
-            border-right: 1px solid rgba(19, 84, 62, 0.2);
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            z-index: 10;
-            flex-shrink: 0;
-        }
-        .sidebar-header .logo {
-            font-size: 2.2rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--color-coral), var(--color-light-accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-decoration: none;
-            letter-spacing: 2px;
-        }
-        .sidebar-header .tagline {
-            font-size: 1rem;
-            color: var(--color-dark-gray);
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        .model-info {
-            transition: opacity 0.4s ease;
+          width: 320px;
+          padding: 30px;
         }
         .model-info .info-title {
-            font-size: 2.5rem;
-            font-weight: 500;
-            color: var(--color-dark-accent);
-            margin-bottom: 10px;
-            line-height: 1.2;
-            font-style: italic;
+          font-size: 2rem;
         }
-        .model-info .info-category {
-            font-size: 1rem;
-            color: var(--color-coral);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-            margin-bottom: 20px;
+      }
+      @media (max-width: 992px) {
+        body {
+          flex-direction: column;
+          height: auto;
+          overflow: auto;
         }
-        .model-info .info-description {
-            font-size: 1rem;
-            color: #555;
-            line-height: 1.7;
+        .sidebar {
+          width: 100%;
+          height: auto;
+          border-right: none;
+          border-bottom: 1px solid rgba(19, 84, 62, 0.2);
+          text-align: center;
         }
-        .sidebar-footer .nav-link a {
-            color: var(--color-dark-gray);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.4s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 30px;
-            border: 2px solid var(--color-coral);
-            border-radius: 50px;
+        .model-info {
+          display: none;
         }
-        .sidebar-footer .nav-link a:hover {
-            color: white;
-            background-color: var(--color-coral);
-        }
-
-        /* --- Main Content --- */
         .main-content {
-            flex-grow: 1;
-            height: 100vh;
-            overflow-y: auto;
-            padding: 40px;
+          height: auto;
+          padding: 40px 20px;
+        }
+      }
+      @media (max-width: 768px) {
+        .main-content {
+          padding: 20px 1rem;
         }
         .gallery-wall {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
         }
-
-        /* --- Card Design --- */
         .model-card {
-            background-color: var(--color-white);
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+          width: 100%;
+          max-width: 400px;
+          margin: 0 auto;
         }
-        .model-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(19, 84, 62, 0.15);
-        }
-        
-        /* Image Container */
-        .image-container {
-            width: 100%;
-            aspect-ratio: 16 / 10;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-        }
-        .model-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            transition: transform 0.5s ease, opacity 0.3s ease;
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-        }
-        .model-image.active {
-            opacity: 1;
-            z-index: 2;
-        }
-        .model-card:hover .model-image.active {
-            transform: scale(1.05);
-        }
-        .card-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            z-index: 5;
-            padding: 0 10px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .model-card:hover .card-nav {
-            opacity: 1;
-        }
-        .card-nav-btn {
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .card-nav-btn:hover {
-            background: rgba(0, 0, 0, 0.8);
-        }
-
-        /* Card Content */
-        .card-content {
-            padding: 20px;
-            text-align: center;
-            flex-grow: 1;
-            border-top: 1px solid #f0f0f0;
-        }
-        .model-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--color-dark-accent);
-            margin-bottom: 8px;
-            font-style: italic;
-        }
-        .model-material {
-            font-size: 1rem;
-            color: var(--color-coral);
-            font-weight: 500;
-        }
-
-        /* --- Lightbox Styles --- */
-        .lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-            padding: 2rem;
-        }
-        .lightbox.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .lightbox img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            border-radius: 4px;
-        }
-
-        .lightbox .close-btn {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            font-size: 2rem;
-            color: var(--color-white);
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .lightbox .close-btn:hover {
-            transform: scale(1.2) rotate(90deg);
-        }
-
-        /* --- Responsive Design --- */
-        @media (max-width: 1200px) { .sidebar { width: 320px; padding: 30px; } .model-info .info-title { font-size: 2rem; } }
-        @media (max-width: 992px) {
-            body { flex-direction: column; height: auto; overflow: auto; }
-            .sidebar { width: 100%; height: auto; border-right: none; border-bottom: 1px solid rgba(19, 84, 62, 0.2); text-align: center; }
-            .model-info { display: none; }
-            .main-content { height: auto; padding: 40px 20px; }
-        }
-        @media (max-width: 768px) {
-            .main-content { padding: 20px 1rem; }
-            .gallery-wall { display: flex; flex-direction: column; align-items: center; gap: 20px; }
-            .model-card { width: 100%; max-width: 400px; margin: 0 auto; }
-        }
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <!-- Sidebar -->
     <aside class="sidebar">
-        <div class="sidebar-header">
-            <a href="#" class="logo">ARCHI-MODELS</a>
-            <p class="tagline">Hover over a model to discover its concept.</p>
+      <div class="sidebar-header">
+        <a href="#" class="logo">ARCHI-MODELS</a>
+        <p class="tagline">Hover over a model to discover its concept.</p>
+      </div>
+      <div id="model-details-panel" class="model-info">
+        <h2 id="info-title" class="info-title">Your Model's Title</h2>
+        <p id="info-category" class="info-category">Model Category</p>
+        <p id="info-description" class="info-description">
+          Hover over any model card to see its details here. This is a
+          placeholder text.
+        </p>
+      </div>
+      <div class="sidebar-footer">
+        <div class="nav-link">
+          <a href="index.html"
+            ><i class="fas fa-arrow-left"></i> Back to Home</a
+          >
         </div>
-        <div id="model-details-panel" class="model-info">
-            <h2 id="info-title" class="info-title">Your Model's Title</h2>
-            <p id="info-category" class="info-category">Model Category</p>
-            <p id="info-description" class="info-description">Hover over any model card to see its details here. This is a placeholder text.</p>
-        </div>
-        <div class="sidebar-footer">
-            <div class="nav-link">
-                <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Home</a>
-            </div>
-        </div>
+      </div>
     </aside>
 
     <!-- Main Content -->
     <main class="main-content">
-        <div class="gallery-wall" id="gallery-wall">
-            <!-- Models will be dynamically inserted here by the script -->
-        </div>
+      <div class="gallery-wall" id="gallery-wall">
+        <!-- Models will be dynamically inserted here by the script -->
+      </div>
     </main>
 
     <!-- Lightbox HTML -->
     <div class="lightbox" id="lightbox">
-        <span class="close-btn" id="close-lightbox">&times;</span>
-        <img src="" alt="Enlarged view" id="lightbox-img">
+      <span class="close-btn" id="close-lightbox">&times;</span>
+      <img src="" alt="Enlarged view" id="lightbox-img" />
     </div>
 
-
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-              // ==================================================================
-            // START: PASTE YOUR MODEL DATA HERE
-            
-            // ==================================================================
-            const modelsData = [
-                                // Architectural Models
-                { id: 1, title: "Linear Complex", category: "Architectural Model", material: "Foam & Cardboard", description: "A study model of a linear building complex, exploring terraced levels and a distinctive facade.",
-                 imageUrls:
-                  ["https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307798/SM-G530H304_u5bpby.jpg",
-                   "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307781/SM-G530H285_gbfvax.jpg", 
-                   "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307782/SM-G530H298_hkhapn.jpg", 
-                   "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307781/SM-G530H296_o6oclk.jpg", 
-                   "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307799/SM-G530H306_xst1yn.jpg",
-                    "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307782/SM-G530H291_m6k0y7.jpg", 
-                    "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307782/SM-G530H291_m6k0y7.jpg", 
-                    "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307780/SM-G530H282_o81qmi.jpg", 
-                    "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307771/SM-G530H277_wobuwz.jpg", 
-                    "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307771/SM-G530H277_wobuwz.jpg"] },
-                { id: 3, title: "Classical Tower", category: "Architectural Model", material: "Wood & Mixed Media", description: "A detailed model of a classical tower base, showcasing intricate facade details.", 
-                imageUrls:
-  ["https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307816/FILE6499_vola16.jpg",
-                   "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307817/IMG-20160105-WA0001_fkgzg3.jpg", 
-                   "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307799/FILE6220_sj70d0.jpg", 
-                   "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307767/IMG-20160105-WA0002_lkt6h2.jpg", 
-                   "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307767/IMG-20160105-WA0002_lkt6h2.jpg"] },                // Musical Instruments (provided by user)
+      document.addEventListener("DOMContentLoaded", function () {
+        // ==================================================================
+        // START: PASTE YOUR MODEL DATA HERE
 
-  {
-    "id": 4,
-    "title": "Modern Living Room Diorama",
-    "category": "Diorama",
-    "material": "Mixed Media",
-    "description": "A detailed miniature model of a modern living room, complete with a sectional sofa, coffee table, TV, and wall art.",
-    "imageUrls": [
-   "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200203/photo_2025-10-10_01-33-28_usmltp.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200204/photo_2025-10-10_01-33-29_opnezb.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200211/photo_2025-10-10_01-33-34_luo0n0.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200212/photo_2025-10-10_01-33-36_jwvz4v.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200212/photo_2025-10-10_01-33-26_2_ydyr1x.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200213/photo_2025-10-10_01-33-27_xik7e4.jpg"
-    ]
-  },
-  {
-    "id": 5,
-    "title": "Arabic Language Day Sculpture",
-    "category": "Sculpture",
-    "material": "Paper & Mixed Media",
-    "description": "A sculpture of an open book with Arabic calligraphy, celebrating the Arabic language. A small figure reads from the book.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193708/photo_2025-10-10_01-28-28_qou7jq.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193708/photo_2025-10-10_01-28-29_fxwig9.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193709/photo_2025-10-10_01-28-30_mrtiuj.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193709/photo_2025-10-10_01-28-34_lwvfif.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193712/photo_2025-10-10_01-28-35_wbtlam.jpg"
-    ]
-  },
-  {
-    "id": 110,
-    "title": "Miniature Workshop Diorama",
-    "category": "Diorama",
-    "material": "Mixed Media",
-    "description": "A detailed miniature workshop scene, possibly a carpenter's or inventor's room, built inside a hollow sphere with lighting.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193690/IMG_20240325_052633_pq4pve.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193659/IMG_20240220_004021_o60xgm.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202066/IMG_20240325_052741_b8efqq.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202047/IMG_20240325_052633_r4aqjc.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202046/IMG_20240325_052550_wshfk6.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202038/IMG_20240325_052640_hgkwuq.jpg"
-    ]
-  },
+        // ==================================================================
+        const modelsData = [
+          // Architectural Models
+          {
+            id: 1,
+            title: "Linear Complex",
+            category: "Architectural Model",
+            material: "Foam & Cardboard",
+            description:
+              "A study model of a linear building complex, exploring terraced levels and a distinctive facade.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307798/SM-G530H304_u5bpby.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307781/SM-G530H285_gbfvax.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307782/SM-G530H298_hkhapn.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307781/SM-G530H296_o6oclk.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307799/SM-G530H306_xst1yn.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307782/SM-G530H291_m6k0y7.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307782/SM-G530H291_m6k0y7.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307780/SM-G530H282_o81qmi.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307771/SM-G530H277_wobuwz.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307771/SM-G530H277_wobuwz.jpg",
+            ],
+          },
+          {
+            id: 3,
+            title: "Classical Tower",
+            category: "Architectural Model",
+            material: "Wood & Mixed Media",
+            description:
+              "A detailed model of a classical tower base, showcasing intricate facade details.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307816/FILE6499_vola16.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307817/IMG-20160105-WA0001_fkgzg3.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307799/FILE6220_sj70d0.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307767/IMG-20160105-WA0002_lkt6h2.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760307767/IMG-20160105-WA0002_lkt6h2.jpg",
+            ],
+          }, // Musical Instruments (provided by user)
 
-  {
-    "id": 5,
-    "title": "Miniature Workshop Diorama",
-    "category": "Diorama",
-    "material": "Mixed Media",
-    "description": "A detailed miniature workshop scene, possibly a carpenter's or inventor's room, built inside a hollow sphere.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193660/IMG_20240324_053953_gnkwem.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193660/IMG_20240324_053933_f6lj36.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193660/IMG_20240324_053735_nmccv9.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193670/IMG_20240324_054043_u1dtrb.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193676/IMG_20240324_055622_b0nqtg.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202057/IMG_20240324_053953_ogfxpi.jpg"    ]
-  },
-//   {
-//     "id": 6,
-//     "title": "Blue Butterfly & Floral Wall Art",
-//     "category": "3D Wall Art",
-//     "material": "Paper/Acrylic",
-//     "description": "A 3D wall art piece featuring blue paper butterflies and flowers against a white background.",
-//     "imageUrls": [
-// "",
-// "",
-// "",
-// "",
-// "",
-// ""    ]
-//   },
-  {
-    "id": 101,
-    "title": "Rocket Launch Diorama",
-    "category": "Diorama",
-    "material": "Mixed Media",
-    "description": "A diorama depicting a rocket launching from a tower, complete with smoke effects.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193679/IMG_20240331_052043_mbesuk.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202059/IMG_20240331_052043_ylijkd.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202048/IMG_20240331_052013_no3nn4.jpg"   ]
-  },
-  {
-    "id": 102,
-    "title": "Calligraphy & Film Reel Sculpture",
-    "category": "Sculpture",
-    "material": "Mixed Media",
-    "description": "A sculpture featuring Arabic calligraphy on panels arranged like a film reel on a wooden base.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193688/IMG_20240401_051701_gcpu3a.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202047/IMG_20240401_051644_lc8fph.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193685/IMG_20240401_051644_l6oyyb.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193683/IMG_20240401_051617_z6g3vc.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193681/IMG_20240401_051555_zqe0ki.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193688/IMG_20240401_051701_gcpu3a.jpg"    ]
-  },
-  {
-    "id": 103,
-    "title": "Anatomical Model of Lungs",
-    "category": "Anatomical Model",
-    "material": "Clay/Resin",
-    "description": "An anatomical model showing a cross-section of human lungs with bronchi and alveoli.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202066/IMG_20240404_051037_mqkff2.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202050/IMG_20240404_051032_okik1m.jpg"   ]
-  },
-  {
-    "id": 104,
-    "title": "Singer Sewing Machine Model",
-    "category": "Scale Model",
-    "material": "Mixed Media",
-    "description": "A miniature model of a vintage Singer sewing machine.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193705/IMG_20240423_011207_y5pihz.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193694/IMG_20240423_011247_vrgovk.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202019/IMG_20240423_011247_prmpgo.jpg"  ]
-  },
-  {
-    "id": 105,
-    "title": "Modern Bathroom Diorama",
-    "category": "Diorama",
-    "material": "Mixed Media",
-    "description": "A diorama of a modern bathroom with a bathtub, sink, and tiled walls.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202026/IMG_20240428_005319_bnsqef.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202021/IMG_20240428_005247_kjn4ts.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193698/IMG_20240428_005312_quzdde.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193699/IMG_20240428_005319_exsq7x.jpg"   ]
-  },
-  {
-    "id": 106,
-    "title": "Knitting Basket Sculpture",
-    "category": "Sculpture",
-    "material": "Clay/Yarn",
-    "description": "A sculpture of a wicker basket filled with colorful balls of yarn and knitting needles.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193702/IMG_20240430_015631_rqxeeh.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193701/IMG_20240430_015611_qp6mkr.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193710/IMG_20240430_015717_cccvaq.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193702/IMG_20240430_015631_rqxeeh.jpg"   ]
-  },
-  {
-    "id": 107,
-    "title": "Mechanic's Workshop Diorama",
-    "category": "Diorama",
-    "material": "Mixed Media",
-    "description": "A diorama showing a mechanic working at a table filled with miniature tools.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202028/IMG_20240507_004214_u0w1od.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202026/IMG_20240507_004206_v9lnuy.jpg"   ]
-  },
-  {
-    "id": 108,
-    "title": "Left and Right Brain Model",
-    "category": "Anatomical Model",
-    "material": "Mixed Media",
-    "description": "A conceptual model illustrating the creative (floral, right) and analytical (gears, left) sides of the human brain.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193713/photo_2025-10-10_01-29-27_souv63.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193714/photo_2025-10-10_01-29-48_emarht.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193714/photo_2025-10-10_01-29-46_crmq04.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193714/photo_2025-10-10_01-29-53_vk5mgg.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193713/photo_2025-10-10_01-29-29_kaicfh.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193714/photo_2025-10-10_01-29-38_onwnfm.jpg"    ]
-  },
-  {
-    "id": 109,
-    "title": "Lighted House Model",
-    "category": "Architectural Model",
-    "material": "Wood/Mixed Media",
-    "description": "An architectural model of a two-story house with interior lighting.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193711/photo_2025-10-10_01-29-07_wyvz1n.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193710/photo_2025-10-10_01-28-56_nj1ljo.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193710/photo_2025-10-10_01-29-03_npdvyt.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193711/photo_2025-10-10_01-29-10_hfxltj.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193712/photo_2025-10-10_01-29-22_jlenvu.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193710/photo_2025-10-10_01-28-45_wqcmkt.jpg"    ]
-  },
-  {
-    "id": 7,
-    "title": "Red and Yellow Paper Roses",
-    "category": "Paper Art",
-    "material": "Paper",
-    "description": "A bouquet of handcrafted paper roses in shades of red and yellow, with a small bee detail.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193715/photo_2025-10-10_01-30-14_rhdpgr.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193714/photo_2025-10-10_01-30-07_c8zswt.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193714/photo_2025-10-10_01-30-06_cqbdwp.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193715/photo_2025-10-10_01-30-47_l01sqk.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193716/photo_2025-10-10_01-30-51_qi5ulx.jpg"    ]
-  },
-  {
-    "id": 8,
-    "title": "Sunflower and Swing Paper Art",
-    "category": "Paper Art",
-    "material": "Paper/Cardboard",
-    "description": "A 3D paper art piece featuring large yellow and blue sunflowers with a silhouette of a person on a swing.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193716/photo_2025-10-10_01-31-01_jpkd8w.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193716/photo_2025-10-10_01-30-58_isytv3.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193716/photo_2025-10-10_01-31-00_mloy9n.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193717/photo_2025-10-10_01-31-02_lybnp7.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193717/photo_2025-10-10_01-31-05_i7oeby.jpg"   ]
-  },
-  {
-    "id": 9,
-    "title": "Pink Paper Flower Shadow Box",
-    "category": "Paper Art",
-    "material": "Paper/Foam Board",
-    "description": "A shadow box filled with pink and purple paper flowers, featuring a Chanel N°5 logo.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193717/photo_2025-10-10_01-31-03_zdlbpd.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193717/photo_2025-10-10_01-31-04_fnvjfm.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193717/photo_2025-10-10_01-31-08_qrlqkx.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193717/photo_2025-10-10_01-31-06_t9opv7.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193718/photo_2025-10-10_01-31-09_euv2hp.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193718/photo_2025-10-10_01-31-11_hqwvwf.jpg"    ]
-  },
-  {
-    "id": 11,
-    "title": "Floral Wreath with Birds",
-    "category": "Paper Art",
-    "material": "Paper/Cardboard",
-    "description": "A decorative wall piece featuring a square frame adorned with colorful paper flowers and two birds.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193719/photo_2025-10-10_01-31-18_ok4uxh.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193718/photo_2025-10-10_01-31-17_gkck28.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193718/photo_2025-10-10_01-31-16_rdkkzt.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193718/photo_2025-10-10_01-31-13_u0kugd.jpg",
+          {
+            id: 4,
+            title: "Modern Living Room Diorama",
+            category: "Diorama",
+            material: "Mixed Media",
+            description:
+              "A detailed miniature model of a modern living room, complete with a sectional sofa, coffee table, TV, and wall art.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200203/photo_2025-10-10_01-33-28_usmltp.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200204/photo_2025-10-10_01-33-29_opnezb.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200211/photo_2025-10-10_01-33-34_luo0n0.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200212/photo_2025-10-10_01-33-36_jwvz4v.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200212/photo_2025-10-10_01-33-26_2_ydyr1x.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200213/photo_2025-10-10_01-33-27_xik7e4.jpg",
+            ],
+          },
+          {
+            id: 5,
+            title: "Arabic Language Day Sculpture",
+            category: "Sculpture",
+            material: "Paper & Mixed Media",
+            description:
+              "A sculpture of an open book with Arabic calligraphy, celebrating the Arabic language. A small figure reads from the book.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193708/photo_2025-10-10_01-28-28_qou7jq.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193708/photo_2025-10-10_01-28-29_fxwig9.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193709/photo_2025-10-10_01-28-30_mrtiuj.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193709/photo_2025-10-10_01-28-34_lwvfif.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193712/photo_2025-10-10_01-28-35_wbtlam.jpg",
+            ],
+          },
+          {
+            id: 110,
+            title: "Miniature Workshop Diorama",
+            category: "Diorama",
+            material: "Mixed Media",
+            description:
+              "A detailed miniature workshop scene, possibly a carpenter's or inventor's room, built inside a hollow sphere with lighting.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193690/IMG_20240325_052633_pq4pve.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193659/IMG_20240220_004021_o60xgm.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202066/IMG_20240325_052741_b8efqq.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202047/IMG_20240325_052633_r4aqjc.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202046/IMG_20240325_052550_wshfk6.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202038/IMG_20240325_052640_hgkwuq.jpg",
+            ],
+          },
 
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193718/photo_2025-10-10_01-31-12_pv9obp.jpg"    ]
-  },
- {
-    "id": 12,
-    "title": "Map of Jordan in Paper Flowers",
-    "category": "Paper Art",
-    "material": "Paper",
-    "description": "A 3D paper art piece depicting the map of Jordan, created with paper roses in the colors of the Jordan flag: black, white, green, and red.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200115/photo_2025-10-10_01-31-31_m1ekfn.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200120/photo_2025-10-10_01-31-29_bje3z1.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200121/photo_2025-10-10_01-31-33_cuh8m4.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200121/photo_2025-10-10_01-31-34_cfawzf.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200121/photo_2025-10-10_01-31-32_kobrw2.jpg"
-    ]
-  },             {
-    "id": 13,
-    "title": "Floral Silhouette Paper Art",
-    "category": "Paper Art",
-    "material": "Paper & Paint",
-    "description": "A 3D paper art piece featuring a woman's silhouette with hair made of green and yellow paper flowers.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200127/photo_2025-10-10_01-31-39_2_rqzbei.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200127/photo_2025-10-10_01-31-39_ouaceq.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200126/photo_2025-10-10_01-31-36_xw6opn.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200130/photo_2025-10-10_01-31-41_kmah45.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200135/photo_2025-10-10_01-31-43_psv0i8.jpg" ]
-  },
-  {
-    "id": 15,
-    "title": "Hot Air Balloon with Flowers",
-    "category": "Paper Art",
-    "material": "Paper/Acrylic",
-    "description": "A whimsical 3D art piece depicting a hot air balloon whose balloon part is made of colorful paper roses.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200130/photo_2025-10-10_01-31-47_giwad5.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200127/photo_2025-10-10_01-31-46_i6mgj5.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200135/photo_2025-10-10_01-31-49_sslskq.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200135/photo_2025-10-10_01-31-44_ax8lm9.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200136/photo_2025-10-10_01-31-45_tuwlx0.jpg"  ]
-  },
-  {
-    "id": 16,
-    "title": "Birdcage with Flowers",
-    "category": "Paper Art",
-    "material": "Paper/Resin",
-    "description": "A decorative piece featuring a birdcage silhouette with a blue paper bird inside, surrounded by purple and yellow paper flowers.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200136/photo_2025-10-10_01-31-58_myo8rh.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200143/photo_2025-10-10_01-31-55_rnksbt.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200143/photo_2025-10-10_01-31-55_rnksbt.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200143/photo_2025-10-10_01-31-56_li7wqc.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200143/photo_2025-10-10_01-32-00_iwwjql.jpg",
-  ]
-  },
-  {
-    "id": 17,
-    "title": "Peacock Paper Art",
-    "category": "Paper Art",
-    "material": "Paper/Cardboard",
-    "description": "A vibrant 3D paper sculpture of a peacock with an elaborate tail made of blue, green, and yellow paper.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200143/photo_2025-10-10_01-32-08_etyjex.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200143/photo_2025-10-10_01-32-07_a6lsg2.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200153/photo_2025-10-10_01-32-03_xiciqf.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200153/photo_2025-10-10_01-32-04_fu2rjf.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200154/photo_2025-10-10_01-32-06_ianfbh.jpg"  ]
-  },
-  {
-    "id": 18,
-    "title": "Bouquet with Butterflies",
-    "category": "Paper Art",
-    "material": "Mixed Media",
-    "description": "A 3D art piece of a flower bouquet wrapped in gold paper, accented with pink paper butterflies.",
-   "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200144/photo_2025-10-10_01-32-16_ivjuwf.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200144/photo_2025-10-10_01-32-18_kcoisg.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200153/photo_2025-10-10_01-32-17_lpblsr.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200153/photo_2025-10-10_01-32-20_qrddpj.jpg",
+          {
+            id: 5,
+            title: "Miniature Workshop Diorama",
+            category: "Diorama",
+            material: "Mixed Media",
+            description:
+              "A detailed miniature workshop scene, possibly a carpenter's or inventor's room, built inside a hollow sphere.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193660/IMG_20240324_053953_gnkwem.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193660/IMG_20240324_053933_f6lj36.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193660/IMG_20240324_053735_nmccv9.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193670/IMG_20240324_054043_u1dtrb.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193676/IMG_20240324_055622_b0nqtg.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202057/IMG_20240324_053953_ogfxpi.jpg",
+            ],
+          },
+          //   {
+          //     "id": 6,
+          //     "title": "Blue Butterfly & Floral Wall Art",
+          //     "category": "3D Wall Art",
+          //     "material": "Paper/Acrylic",
+          //     "description": "A 3D wall art piece featuring blue paper butterflies and flowers against a white background.",
+          //     "imageUrls": [
+          // "",
+          // "",
+          // "",
+          // "",
+          // "",
+          // ""    ]
+          //   },
+          {
+            id: 101,
+            title: "Rocket Launch Diorama",
+            category: "Diorama",
+            material: "Mixed Media",
+            description:
+              "A diorama depicting a rocket launching from a tower, complete with smoke effects.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193679/IMG_20240331_052043_mbesuk.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202059/IMG_20240331_052043_ylijkd.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202048/IMG_20240331_052013_no3nn4.jpg",
+            ],
+          },
+          {
+            id: 102,
+            title: "Calligraphy & Film Reel Sculpture",
+            category: "Sculpture",
+            material: "Mixed Media",
+            description:
+              "A sculpture featuring Arabic calligraphy on panels arranged like a film reel on a wooden base.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193688/IMG_20240401_051701_gcpu3a.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202047/IMG_20240401_051644_lc8fph.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193685/IMG_20240401_051644_l6oyyb.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193683/IMG_20240401_051617_z6g3vc.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193681/IMG_20240401_051555_zqe0ki.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193688/IMG_20240401_051701_gcpu3a.jpg",
+            ],
+          },
+          {
+            id: 103,
+            title: "Anatomical Model of Lungs",
+            category: "Anatomical Model",
+            material: "Clay/Resin",
+            description:
+              "An anatomical model showing a cross-section of human lungs with bronchi and alveoli.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202066/IMG_20240404_051037_mqkff2.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202050/IMG_20240404_051032_okik1m.jpg",
+            ],
+          },
+          {
+            id: 104,
+            title: "Singer Sewing Machine Model",
+            category: "Scale Model",
+            material: "Mixed Media",
+            description:
+              "A miniature model of a vintage Singer sewing machine.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193705/IMG_20240423_011207_y5pihz.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193694/IMG_20240423_011247_vrgovk.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202019/IMG_20240423_011247_prmpgo.jpg",
+            ],
+          },
+          {
+            id: 105,
+            title: "Modern Bathroom Diorama",
+            category: "Diorama",
+            material: "Mixed Media",
+            description:
+              "A diorama of a modern bathroom with a bathtub, sink, and tiled walls.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202026/IMG_20240428_005319_bnsqef.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202021/IMG_20240428_005247_kjn4ts.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193698/IMG_20240428_005312_quzdde.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193699/IMG_20240428_005319_exsq7x.jpg",
+            ],
+          },
+          {
+            id: 106,
+            title: "Knitting Basket Sculpture",
+            category: "Sculpture",
+            material: "Clay/Yarn",
+            description:
+              "A sculpture of a wicker basket filled with colorful balls of yarn and knitting needles.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193702/IMG_20240430_015631_rqxeeh.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193701/IMG_20240430_015611_qp6mkr.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193710/IMG_20240430_015717_cccvaq.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193702/IMG_20240430_015631_rqxeeh.jpg",
+            ],
+          },
+          {
+            id: 107,
+            title: "Mechanic's Workshop Diorama",
+            category: "Diorama",
+            material: "Mixed Media",
+            description:
+              "A diorama showing a mechanic working at a table filled with miniature tools.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202028/IMG_20240507_004214_u0w1od.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202026/IMG_20240507_004206_v9lnuy.jpg",
+            ],
+          },
+          {
+            id: 108,
+            title: "Left and Right Brain Model",
+            category: "Anatomical Model",
+            material: "Mixed Media",
+            description:
+              "A conceptual model illustrating the creative (floral, right) and analytical (gears, left) sides of the human brain.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193713/photo_2025-10-10_01-29-27_souv63.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193714/photo_2025-10-10_01-29-48_emarht.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193714/photo_2025-10-10_01-29-46_crmq04.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193714/photo_2025-10-10_01-29-53_vk5mgg.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193713/photo_2025-10-10_01-29-29_kaicfh.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193714/photo_2025-10-10_01-29-38_onwnfm.jpg",
+            ],
+          },
+          {
+            id: 109,
+            title: "Lighted House Model",
+            category: "Architectural Model",
+            material: "Wood/Mixed Media",
+            description:
+              "An architectural model of a two-story house with interior lighting.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193711/photo_2025-10-10_01-29-07_wyvz1n.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193710/photo_2025-10-10_01-28-56_nj1ljo.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193710/photo_2025-10-10_01-29-03_npdvyt.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193711/photo_2025-10-10_01-29-10_hfxltj.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193712/photo_2025-10-10_01-29-22_jlenvu.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193710/photo_2025-10-10_01-28-45_wqcmkt.jpg",
+            ],
+          },
+          {
+            id: 7,
+            title: "Red and Yellow Paper Roses",
+            category: "Paper Art",
+            material: "Paper",
+            description:
+              "A bouquet of handcrafted paper roses in shades of red and yellow, with a small bee detail.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193715/photo_2025-10-10_01-30-14_rhdpgr.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193714/photo_2025-10-10_01-30-07_c8zswt.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193714/photo_2025-10-10_01-30-06_cqbdwp.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193715/photo_2025-10-10_01-30-47_l01sqk.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193716/photo_2025-10-10_01-30-51_qi5ulx.jpg",
+            ],
+          },
+          {
+            id: 8,
+            title: "Sunflower and Swing Paper Art",
+            category: "Paper Art",
+            material: "Paper/Cardboard",
+            description:
+              "A 3D paper art piece featuring large yellow and blue sunflowers with a silhouette of a person on a swing.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193716/photo_2025-10-10_01-31-01_jpkd8w.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193716/photo_2025-10-10_01-30-58_isytv3.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193716/photo_2025-10-10_01-31-00_mloy9n.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193717/photo_2025-10-10_01-31-02_lybnp7.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193717/photo_2025-10-10_01-31-05_i7oeby.jpg",
+            ],
+          },
+          {
+            id: 9,
+            title: "Pink Paper Flower Shadow Box",
+            category: "Paper Art",
+            material: "Paper/Foam Board",
+            description:
+              "A shadow box filled with pink and purple paper flowers, featuring a Chanel N°5 logo.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193717/photo_2025-10-10_01-31-03_zdlbpd.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193717/photo_2025-10-10_01-31-04_fnvjfm.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193717/photo_2025-10-10_01-31-08_qrlqkx.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193717/photo_2025-10-10_01-31-06_t9opv7.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193718/photo_2025-10-10_01-31-09_euv2hp.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193718/photo_2025-10-10_01-31-11_hqwvwf.jpg",
+            ],
+          },
+          {
+            id: 11,
+            title: "Floral Wreath with Birds",
+            category: "Paper Art",
+            material: "Paper/Cardboard",
+            description:
+              "A decorative wall piece featuring a square frame adorned with colorful paper flowers and two birds.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193719/photo_2025-10-10_01-31-18_ok4uxh.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193718/photo_2025-10-10_01-31-17_gkck28.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193718/photo_2025-10-10_01-31-16_rdkkzt.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193718/photo_2025-10-10_01-31-13_u0kugd.jpg",
 
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200154/photo_2025-10-10_01-32-15_hhysgh.jpg"    ]
-  },
-  {
-    "id": 20,
-    "title": "Blue Paper Roses",
-    "category": "Paper Art",
-    "material": "Paper/Canvas",
-    "description": "A collection of handcrafted paper roses in various shades of blue.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200154/photo_2025-10-10_01-32-26_wshpma.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200164/photo_2025-10-10_01-32-32_a8shon.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200163/photo_2025-10-10_01-32-27_paqn40.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200163/photo_2025-10-10_01-32-25_ar2dm1.jpg",
-     ]
-  },
-  {
-    "id": 21,
-    "title": "Mixed Floral Paper Art",
-    "category": "Paper Art",
-    "material": "Paper/Cardboard",
-    "description": "A vibrant assortment of paper flowers, including sunflowers and daisies, in various colors.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200164/photo_2025-10-10_01-32-39_lwwlic.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200164/photo_2025-10-10_01-32-38_2_nwpuhr.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200164/photo_2025-10-10_01-32-38_tbu9ga.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200175/photo_2025-10-10_01-32-41_wko1ow.jpg",
-     ]
-  },
-  {
-    "id": 22,
-    "title": "Bicycle with Flowers",
-    "category": "Paper Art",
-    "material": "Mixed Media",
-    "description": "A 3D artwork featuring a blue bicycle with a basket of flowers, framed by blue paper roses.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200177/photo_2025-10-10_01-32-46_speijg.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200175/photo_2025-10-10_01-32-49_tf7tlb.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200175/photo_2025-10-10_01-32-47_ti5r6s.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200177/photo_2025-10-10_01-32-46_speijg.jpg"      ]
-  },
-  {
-    "id": 23,
-    "title": "Fan with Flowers",
-    "category": "Paper Art",
-    "material": "Paper/Foam",
-    "description": "A decorative piece featuring a black fan adorned with red, white, and purple paper flowers.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200185/photo_2025-10-10_01-32-52_ifbbvf.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200185/photo_2025-10-10_01-32-50_uqv6hn.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200175/photo_2025-10-10_01-32-49_tf7tlb.jpg"    ]
-  },
-  {
-    "id": 24,
-    "title": "Butterfly of Flowers",
-    "category": "Paper Art",
-    "material": "Paper/Resin",
-    "description": "An intricate art piece where a large butterfly shape is formed from an arrangement of pink and white paper flowers.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200186/photo_2025-10-10_01-32-55_ofwmfh.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200186/photo_2025-10-10_01-32-56_umq8nv.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200186/photo_2025-10-10_01-32-57_b0s5ss.jpg"   ]
-  },
-  {
-    "id": 29,
-    "title": "Tropical Floral Scene",
-    "category": "Paper Art",
-    "material": "Paper/Cardboard",
-    "description": "A 3D paper scene with tropical leaves, sunflowers, and butterflies.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200205/photo_2025-10-10_01-33-20_zpzuio.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200212/photo_2025-10-10_01-33-22_tp0cjf.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200212/photo_2025-10-10_01-33-19_py6msq.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200204/photo_2025-10-10_01-33-21_s5r5br.jpg"   ]
-  },
-  {
-    "id": 36,
-    "title": "'Just Breathe' Floral Art",
-    "category": "Paper Art",
-    "material": "Paper/Wood",
-    "description": "A decorative piece with dark blue paper flowers and a calligraphic message 'just breathe'.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200222/photo_2025-10-10_01-33-45_2_b0idfp.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200223/photo_2025-10-10_01-33-46_qpivy9.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200222/photo_2025-10-10_01-33-45_unoy8r.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200222/photo_2025-10-10_01-33-45_unoy8r.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200223/photo_2025-10-10_01-33-50_vafx9a.jpg"    ]
-  },
-  {
-    "id": 44,
-    "title": "Oud with Mandala Art",
-    "category": "String Instruments",
-    "material": "Wood & Paint",
-    "description": "A model of a pear-shaped string instrument, the Oud, featuring intricate black and white mandala art around the soundhole.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200240/photo_2025-10-10_01-34-23_wi3gj1.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200245/photo_2025-10-10_01-34-20_ifaaps.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200259/photo_2025-10-10_01-34-33_nrgl2v.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200225/photo_2025-10-10_01-34-15_fsmntf.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200240/photo_2025-10-10_01-34-23_wi3gj1.jpg"
-    ]
-  },
-  {
-    "id": 49,
-    "title": "Acoustic-Electric Guitar",
-    "category": "String Instruments",
-    "material": "Cardboard",
-    "description": "A model of a cutaway acoustic-electric guitar with a natural wood finish.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200246/photo_2025-10-10_01-34-45_ejn1r5.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200246/photo_2025-10-10_01-34-44_vsq8ct.jpg"
-    ]
-  },
-  {
-    "id": 52,
-    "title": "Grand Piano",
-    "category": "Keyboard Instruments",
-    "material": "Wood & Paint",
-    "description": "A detailed model of a black grand piano, complete with a bench and sheet music.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200234/photo_2025-10-10_01-34-54_yhtasr.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200234/photo_2025-10-10_01-34-51_hczekk.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200234/photo_2025-10-10_01-34-55_nfqlra.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200223/photo_2025-10-10_01-34-49_aem2yr.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200259/photo_2025-10-10_01-35-01_qythyg.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200259/photo_2025-10-10_01-34-57_zmjze3.jpg"
-    ]
-  },
-  {
-    "id": 54,
-    "title": "Cello",
-    "category": "String Instruments",
-    "material": "Mixed Media",
-    "description": "A model of a cello, a large string instrument from the violin family, with a reddish-brown finish.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200235/photo_2025-10-10_01-35-03_knbgnq.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200236/photo_2025-10-10_01-35-04_nz9wqe.jpg"
-    ]
-  },
-  {
-    "id": 57,
-    "title": "Drum Kit",
-    "category": "Percussion Instruments",
-    "material": "Cardboard",
-    "description": "A miniature model of a drum kit, including a bass drum, snare, toms, and golden cymbals.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200267/photo_2025-10-10_01-35-13_ssukyq.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200245/photo_2025-10-10_01-35-15_mlpakq.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200245/photo_2025-10-10_01-35-14_zdcw6o.jpg"
-    ]
-  },
-  {
-    "id": 60,
-    "title": "Pedal Harp",
-    "category": "String Instruments",
-    "material": "Wood & Metal",
-    "description": "A model of a black and gold pedal harp, showcasing its elegant frame and strings.",
-    "imageUrls": [
-    "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200259/photo_2025-10-10_01-34-41_zytqbh.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200247/photo_2025-10-10_01-35-26_po10en.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200246/photo_2025-10-10_01-35-25_iaswlf.jpg"
-    ]
-  },
-//              {
-//     "id": 62,
-//     "title": "Tambourine",
-//     "category": "Percussion Instruments",
-//     "material": "Mixed Media",
-//     "description": "A model of a wooden tambourine with golden jingles.",
-//     "imageUrls": [
-// "",
-// "",
-// "",
-// "",
-// "",
-// ""
-//     ]
-//   },
-  {
-    "id": 64,
-    "title": "Upright Piano",
-    "category": "Keyboard Instruments",
-    "material": "Resin",
-    "description": "A detailed model of a black upright piano with a matching bench and sheet music.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200277/photo_2025-10-10_01-35-45_kido5l.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200269/photo_2025-10-10_01-35-39_tz8ocn.jpg"
-    ]
-  },
-  {
-    "id": 67,
-    "title": "Snare Drum",
-    "category": "Percussion Instruments",
-    "material": "Foam",
-    "description": "A model of a red and yellow snare drum with drumsticks.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200277/photo_2025-10-10_01-35-53_kyagxz.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200279/photo_2025-10-10_01-35-58_pbiib6.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200277/photo_2025-10-10_01-35-55_klagyl.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200277/photo_2025-10-10_01-35-56_iygzuc.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200277/photo_2025-10-10_01-35-56_iygzuc.jpg"
-    ]
-  },
-  {
-    "id": 69,
-    "title": "Darbuka Drum",
-    "category": "Percussion Instruments",
-    "material": "Cardboard",
-    "description": "A model of a goblet drum, possibly a Darbuka, with a blue top and decorated base.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200279/photo_2025-10-10_01-36-01_b6kqdt.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200279/photo_2025-10-10_01-36-00_alkdey.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200291/photo_2025-10-10_01-36-03_t9tubo.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200279/photo_2025-10-10_01-36-01_b6kqdt.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200279/photo_2025-10-10_01-36-02_ogyk20.jpg"
-    ]
-  },
-  {
-    "id": 71,
-    "title": "Rainbow Xylophone",
-    "category": "Percussion Instruments",
-    "material": "Foam",
-    "description": "A colorful model of a xylophone with keys painted in a rainbow pattern.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200291/photo_2025-10-10_01-36-09_t54xm6.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200300/photo_2025-10-10_01-36-12_jpgomw.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200307/photo_2025-10-10_01-36-13_znhak6.jpg"
-    ]
-  },
-  {
-    "id": 72,
-    "title": "Harp Detail",
-    "category": "String Instruments",
-    "material": "Resin",
-    "description": "A close-up model showing the detail of a harp's soundbox and strings.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200299/photo_2025-10-10_01-36-27_wx6tpr.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200291/photo_2025-10-10_01-36-26_a39f12.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200291/photo_2025-10-10_01-36-25_gjaogp.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200299/photo_2025-10-10_01-36-27_wx6tpr.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200361/photo_2025-10-10_01-36-22_mtpj1y.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200291/photo_2025-10-10_01-36-25_gjaogp.jpg"
-    ]
-  },
-            {
-    "id": 73,
-    "title": "Greek Bouzouki",
-    "category": "String Instruments",
-    "material": "Cardboard",
-    "description": "A model of a Greek bouzouki with traditional black and white ornamentation.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200303/photo_2025-10-10_01-36-33_o79zy8.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200303/photo_2025-10-10_01-36-33_o79zy8.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200302/photo_2025-10-10_01-36-31_2_lltonc.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200300/photo_2025-10-10_01-36-29_h4xqkk.jpg"
-    ]
-  },
-  {
-    "id": 74,
-    "title": "Golden Trumpet",
-    "category": "Brass Instruments",
-    "material": "Mixed Media",
-    "description": "A model of a golden trumpet resting on a black stand.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201970/photo_2025-10-10_01-36-38_rswhn8.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200335/photo_2025-10-10_01-37-10_nwhjrr.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201970/photo_2025-10-10_01-36-37_doy65e.jpg"
-    ]
-  },
-  {
-    "id": 75,
-    "title": "Electronic Keyboard Synthesizer",
-    "category": "Keyboard Instruments",
-    "material": "Foam",
-    "description": "A detailed model of a modern electronic keyboard synthesizer with a digital display.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201970/photo_2025-10-10_01-37-17_g6fhji.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201970/photo_2025-10-10_01-37-13_xhjpzj.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201970/photo_2025-10-10_01-37-18_ty9kaj.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201981/photo_2025-10-10_01-37-15_dejfsa.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201970/photo_2025-10-10_01-37-16_yzm4oz.jpg"
-    ]
-  },
-  {
-    "id": 77,
-    "title": "Decorated Kithara",
-    "category": "String Instruments",
-    "material": "Cardboard",
-    "description": "A model of a kithara, an ancient stringed instrument, decorated with black and gold patterns.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201971/photo_2025-10-10_01-37-30_lwsfda.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201970/photo_2025-10-10_01-37-26_nym433.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201971/photo_2025-10-10_01-37-25_joy4bu.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201971/photo_2025-10-10_01-37-27_lbqffl.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201982/photo_2025-10-10_01-37-29_hnth1z.jpg"
-    ]
-  },
-  {
-    "id": 78,
-    "title": "Red Piano Accordion",
-    "category": "Keyboard Instruments",
-    "material": "Mixed Media",
-    "description": "A model of a vibrant red and white piano accordion.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201981/photo_2025-10-10_01-37-43_ounzgo.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201982/photo_2025-10-10_01-37-39_zltghm.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201971/photo_2025-10-10_01-37-37_m4xqxp.jpg"
-    ]
-  },
-  {
-    "id": 79,
-    "title": "Vintage Gramophone",
-    "category": "Audio Equipment",
-    "material": "Foam",
-    "description": "A model of a vintage gramophone with a golden horn and a wooden-style base.",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201982/photo_2025-10-10_01-37-46_kjxzq1.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201981/photo_2025-10-10_01-37-44_arqt3g.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201982/photo_2025-10-10_01-37-48_feqbv0.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201987/photo_2025-10-10_01-37-51_fba9os.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201981/photo_2025-10-10_01-37-44_arqt3g.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201982/photo_2025-10-10_01-37-46_kjxzq1.jpg"
-    ]
-  },
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760193718/photo_2025-10-10_01-31-12_pv9obp.jpg",
+            ],
+          },
+          {
+            id: 12,
+            title: "Map of Jordan in Paper Flowers",
+            category: "Paper Art",
+            material: "Paper",
+            description:
+              "A 3D paper art piece depicting the map of Jordan, created with paper roses in the colors of the Jordan flag: black, white, green, and red.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200115/photo_2025-10-10_01-31-31_m1ekfn.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200120/photo_2025-10-10_01-31-29_bje3z1.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200121/photo_2025-10-10_01-31-33_cuh8m4.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200121/photo_2025-10-10_01-31-34_cfawzf.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200121/photo_2025-10-10_01-31-32_kobrw2.jpg",
+            ],
+          },
+          {
+            id: 13,
+            title: "Floral Silhouette Paper Art",
+            category: "Paper Art",
+            material: "Paper & Paint",
+            description:
+              "A 3D paper art piece featuring a woman's silhouette with hair made of green and yellow paper flowers.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200127/photo_2025-10-10_01-31-39_2_rqzbei.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200127/photo_2025-10-10_01-31-39_ouaceq.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200126/photo_2025-10-10_01-31-36_xw6opn.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200130/photo_2025-10-10_01-31-41_kmah45.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200135/photo_2025-10-10_01-31-43_psv0i8.jpg",
+            ],
+          },
+          {
+            id: 15,
+            title: "Hot Air Balloon with Flowers",
+            category: "Paper Art",
+            material: "Paper/Acrylic",
+            description:
+              "A whimsical 3D art piece depicting a hot air balloon whose balloon part is made of colorful paper roses.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200130/photo_2025-10-10_01-31-47_giwad5.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200127/photo_2025-10-10_01-31-46_i6mgj5.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200135/photo_2025-10-10_01-31-49_sslskq.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200135/photo_2025-10-10_01-31-44_ax8lm9.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200136/photo_2025-10-10_01-31-45_tuwlx0.jpg",
+            ],
+          },
+          {
+            id: 16,
+            title: "Birdcage with Flowers",
+            category: "Paper Art",
+            material: "Paper/Resin",
+            description:
+              "A decorative piece featuring a birdcage silhouette with a blue paper bird inside, surrounded by purple and yellow paper flowers.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200136/photo_2025-10-10_01-31-58_myo8rh.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200143/photo_2025-10-10_01-31-55_rnksbt.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200143/photo_2025-10-10_01-31-55_rnksbt.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200143/photo_2025-10-10_01-31-56_li7wqc.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200143/photo_2025-10-10_01-32-00_iwwjql.jpg",
+            ],
+          },
+          {
+            id: 17,
+            title: "Peacock Paper Art",
+            category: "Paper Art",
+            material: "Paper/Cardboard",
+            description:
+              "A vibrant 3D paper sculpture of a peacock with an elaborate tail made of blue, green, and yellow paper.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200143/photo_2025-10-10_01-32-08_etyjex.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200143/photo_2025-10-10_01-32-07_a6lsg2.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200153/photo_2025-10-10_01-32-03_xiciqf.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200153/photo_2025-10-10_01-32-04_fu2rjf.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200154/photo_2025-10-10_01-32-06_ianfbh.jpg",
+            ],
+          },
+          {
+            id: 18,
+            title: "Bouquet with Butterflies",
+            category: "Paper Art",
+            material: "Mixed Media",
+            description:
+              "A 3D art piece of a flower bouquet wrapped in gold paper, accented with pink paper butterflies.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200144/photo_2025-10-10_01-32-16_ivjuwf.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200144/photo_2025-10-10_01-32-18_kcoisg.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200153/photo_2025-10-10_01-32-17_lpblsr.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200153/photo_2025-10-10_01-32-20_qrddpj.jpg",
 
-  {
-    "id": 80,
-    "title": "White Lute with Floral Art",
-    "category": "String Instruments",
-    "material": "Wood",
-    "description": "A white lute-style instrument featuring a delicate floral design, possibly inspired by traditional folk art. [16, 19, 20]",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201988/photo_2025-10-10_01-38-01_ta29u0.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201988/photo_2025-10-10_01-38-01_ta29u0.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201988/photo_2025-10-10_01-38-04_fsmnic.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201989/photo_2025-10-10_01-38-07_sywffi.jpg"
-    ]
-  },
-  {
-    "id": 83,
-    "title": "Acoustic Guitar with Mandala Art",
-    "category": "String Instruments",
-    "material": "Wood",
-    "description": "A black acoustic guitar decorated with intricate gold mandala-style artwork around the soundhole. [15, 22, 23, 24, 28]",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201993/photo_2025-10-10_01-38-33_rmadkj.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201993/photo_2025-10-10_01-38-31_ofo7qz.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201993/photo_2025-10-10_01-38-32_gkm5vm.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201994/photo_2025-10-10_01-38-35_ugvg0p.jpg"
-    ]
-  },
-  {
-    "id": 84,
-    "title": "Folk Art Banjo",
-    "category": "String Instruments",
-    "material": "Wood & Metal",
-    "description": "A round-bodied string instrument, similar to a banjo or a round-bodied lute, featuring colorful folk art with animal motifs. [14, 25, 29]",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202004/photo_2025-10-10_01-38-42_pqecew.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202000/photo_2025-10-10_01-38-43_ywk3a1.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202005/photo_2025-10-10_01-38-45_nyo835.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201995/photo_2025-10-10_01-38-39_nyd1gn.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201993/photo_2025-10-10_01-38-34_xq7aml.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201993/photo_2025-10-10_01-38-34_xq7aml.jpg"
-    ]
-  },
-  {
-    "id": 86,
-    "title": "Black Electric Guitar",
-    "category": "String Instruments",
-    "material": "Mixed Media",
-    "description": "A classic black and white electric guitar model. [4, 6, 12, 13, 17]",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202006/photo_2025-10-10_01-38-46_uzoet5.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202009/photo_2025-10-10_01-38-51_tnis7l.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202010/photo_2025-10-10_01-38-49_gbp4aj.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202009/photo_2025-10-10_01-38-51_tnis7l.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201995/photo_2025-10-10_01-38-54_cwkddw.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201995/photo_2025-10-10_01-38-52_ajipmm.jpg"
-    ]
-  },
-  {
-    "id": 87,
-    "title": "Vintage Turntable Model",
-    "category": "Audio Equipment",
-    "material": "Wood & Plastic",
-    "description": "A model of a vintage-style turntable or record player. [5, 7, 8, 9, 11]",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202000/photo_2025-10-10_01-39-09_w1wlrz.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201999/photo_2025-10-10_01-39-02_g6ztdc.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201999/photo_2025-10-10_01-39-07_tlkxlt.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202000/photo_2025-10-10_01-39-08_fx4pmq.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201999/photo_2025-10-10_01-39-03_vtwvzl.jpg"
-    ]
-  },
-  {
-    "id": 88,
-    "title": "Ancient Greek Lyre",
-    "category": "String Instruments",
-    "material": "Wood",
-    "description": "A wooden model of an ancient Greek lyre, a stringed instrument, featuring a deer motif. [2, 3, 10, 18, 21]",
-    "imageUrls": [
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201999/photo_2025-10-10_01-39-11_2_zvlwfx.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202000/photo_2025-10-10_01-39-13_sxnrno.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202004/photo_2025-10-10_01-39-11_katc8t.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202006/photo_2025-10-10_01-39-16_gh9f4h.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202005/photo_2025-10-10_01-39-15_x2c8xc.jpg",
-"https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202005/photo_2025-10-10_01-39-14_jfuur0.jpg"
-    ]
-  }
-];
-            // ==================================================================
-            // END: PASTE YOUR MODEL DATA HERE
-            // ==================================================================
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200154/photo_2025-10-10_01-32-15_hhysgh.jpg",
+            ],
+          },
+          {
+            id: 20,
+            title: "Blue Paper Roses",
+            category: "Paper Art",
+            material: "Paper/Canvas",
+            description:
+              "A collection of handcrafted paper roses in various shades of blue.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200154/photo_2025-10-10_01-32-26_wshpma.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200164/photo_2025-10-10_01-32-32_a8shon.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200163/photo_2025-10-10_01-32-27_paqn40.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200163/photo_2025-10-10_01-32-25_ar2dm1.jpg",
+            ],
+          },
+          {
+            id: 21,
+            title: "Mixed Floral Paper Art",
+            category: "Paper Art",
+            material: "Paper/Cardboard",
+            description:
+              "A vibrant assortment of paper flowers, including sunflowers and daisies, in various colors.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200164/photo_2025-10-10_01-32-39_lwwlic.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200164/photo_2025-10-10_01-32-38_2_nwpuhr.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200164/photo_2025-10-10_01-32-38_tbu9ga.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200175/photo_2025-10-10_01-32-41_wko1ow.jpg",
+            ],
+          },
+          {
+            id: 22,
+            title: "Bicycle with Flowers",
+            category: "Paper Art",
+            material: "Mixed Media",
+            description:
+              "A 3D artwork featuring a blue bicycle with a basket of flowers, framed by blue paper roses.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200177/photo_2025-10-10_01-32-46_speijg.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200175/photo_2025-10-10_01-32-49_tf7tlb.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200175/photo_2025-10-10_01-32-47_ti5r6s.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200177/photo_2025-10-10_01-32-46_speijg.jpg",
+            ],
+          },
+          {
+            id: 23,
+            title: "Fan with Flowers",
+            category: "Paper Art",
+            material: "Paper/Foam",
+            description:
+              "A decorative piece featuring a black fan adorned with red, white, and purple paper flowers.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200185/photo_2025-10-10_01-32-52_ifbbvf.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200185/photo_2025-10-10_01-32-50_uqv6hn.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200175/photo_2025-10-10_01-32-49_tf7tlb.jpg",
+            ],
+          },
+          {
+            id: 24,
+            title: "Butterfly of Flowers",
+            category: "Paper Art",
+            material: "Paper/Resin",
+            description:
+              "An intricate art piece where a large butterfly shape is formed from an arrangement of pink and white paper flowers.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200186/photo_2025-10-10_01-32-55_ofwmfh.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200186/photo_2025-10-10_01-32-56_umq8nv.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200186/photo_2025-10-10_01-32-57_b0s5ss.jpg",
+            ],
+          },
+          {
+            id: 29,
+            title: "Tropical Floral Scene",
+            category: "Paper Art",
+            material: "Paper/Cardboard",
+            description:
+              "A 3D paper scene with tropical leaves, sunflowers, and butterflies.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200205/photo_2025-10-10_01-33-20_zpzuio.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200212/photo_2025-10-10_01-33-22_tp0cjf.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200212/photo_2025-10-10_01-33-19_py6msq.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200204/photo_2025-10-10_01-33-21_s5r5br.jpg",
+            ],
+          },
+          {
+            id: 36,
+            title: "'Just Breathe' Floral Art",
+            category: "Paper Art",
+            material: "Paper/Wood",
+            description:
+              "A decorative piece with dark blue paper flowers and a calligraphic message 'just breathe'.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200222/photo_2025-10-10_01-33-45_2_b0idfp.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200223/photo_2025-10-10_01-33-46_qpivy9.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200222/photo_2025-10-10_01-33-45_unoy8r.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200222/photo_2025-10-10_01-33-45_unoy8r.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200223/photo_2025-10-10_01-33-50_vafx9a.jpg",
+            ],
+          },
+          {
+            id: 44,
+            title: "Oud with Mandala Art",
+            category: "String Instruments",
+            material: "Wood & Paint",
+            description:
+              "A model of a pear-shaped string instrument, the Oud, featuring intricate black and white mandala art around the soundhole.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200240/photo_2025-10-10_01-34-23_wi3gj1.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200245/photo_2025-10-10_01-34-20_ifaaps.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200259/photo_2025-10-10_01-34-33_nrgl2v.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200225/photo_2025-10-10_01-34-15_fsmntf.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200240/photo_2025-10-10_01-34-23_wi3gj1.jpg",
+            ],
+          },
+          {
+            id: 49,
+            title: "Acoustic-Electric Guitar",
+            category: "String Instruments",
+            material: "Cardboard",
+            description:
+              "A model of a cutaway acoustic-electric guitar with a natural wood finish.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200246/photo_2025-10-10_01-34-45_ejn1r5.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200246/photo_2025-10-10_01-34-44_vsq8ct.jpg",
+            ],
+          },
+          {
+            id: 52,
+            title: "Grand Piano",
+            category: "Keyboard Instruments",
+            material: "Wood & Paint",
+            description:
+              "A detailed model of a black grand piano, complete with a bench and sheet music.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200234/photo_2025-10-10_01-34-54_yhtasr.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200234/photo_2025-10-10_01-34-51_hczekk.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200234/photo_2025-10-10_01-34-55_nfqlra.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200223/photo_2025-10-10_01-34-49_aem2yr.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200259/photo_2025-10-10_01-35-01_qythyg.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200259/photo_2025-10-10_01-34-57_zmjze3.jpg",
+            ],
+          },
+          {
+            id: 54,
+            title: "Cello",
+            category: "String Instruments",
+            material: "Mixed Media",
+            description:
+              "A model of a cello, a large string instrument from the violin family, with a reddish-brown finish.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200235/photo_2025-10-10_01-35-03_knbgnq.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200236/photo_2025-10-10_01-35-04_nz9wqe.jpg",
+            ],
+          },
+          {
+            id: 57,
+            title: "Drum Kit",
+            category: "Percussion Instruments",
+            material: "Cardboard",
+            description:
+              "A miniature model of a drum kit, including a bass drum, snare, toms, and golden cymbals.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200267/photo_2025-10-10_01-35-13_ssukyq.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200245/photo_2025-10-10_01-35-15_mlpakq.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200245/photo_2025-10-10_01-35-14_zdcw6o.jpg",
+            ],
+          },
+          {
+            id: 60,
+            title: "Pedal Harp",
+            category: "String Instruments",
+            material: "Wood & Metal",
+            description:
+              "A model of a black and gold pedal harp, showcasing its elegant frame and strings.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200259/photo_2025-10-10_01-34-41_zytqbh.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200247/photo_2025-10-10_01-35-26_po10en.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200246/photo_2025-10-10_01-35-25_iaswlf.jpg",
+            ],
+          },
+          //              {
+          //     "id": 62,
+          //     "title": "Tambourine",
+          //     "category": "Percussion Instruments",
+          //     "material": "Mixed Media",
+          //     "description": "A model of a wooden tambourine with golden jingles.",
+          //     "imageUrls": [
+          // "",
+          // "",
+          // "",
+          // "",
+          // "",
+          // ""
+          //     ]
+          //   },
+          {
+            id: 64,
+            title: "Upright Piano",
+            category: "Keyboard Instruments",
+            material: "Resin",
+            description:
+              "A detailed model of a black upright piano with a matching bench and sheet music.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200277/photo_2025-10-10_01-35-45_kido5l.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200269/photo_2025-10-10_01-35-39_tz8ocn.jpg",
+            ],
+          },
+          {
+            id: 67,
+            title: "Snare Drum",
+            category: "Percussion Instruments",
+            material: "Foam",
+            description:
+              "A model of a red and yellow snare drum with drumsticks.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200277/photo_2025-10-10_01-35-53_kyagxz.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200279/photo_2025-10-10_01-35-58_pbiib6.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200277/photo_2025-10-10_01-35-55_klagyl.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200277/photo_2025-10-10_01-35-56_iygzuc.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200277/photo_2025-10-10_01-35-56_iygzuc.jpg",
+            ],
+          },
+          {
+            id: 69,
+            title: "Darbuka Drum",
+            category: "Percussion Instruments",
+            material: "Cardboard",
+            description:
+              "A model of a goblet drum, possibly a Darbuka, with a blue top and decorated base.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200279/photo_2025-10-10_01-36-01_b6kqdt.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200279/photo_2025-10-10_01-36-00_alkdey.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200291/photo_2025-10-10_01-36-03_t9tubo.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200279/photo_2025-10-10_01-36-01_b6kqdt.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200279/photo_2025-10-10_01-36-02_ogyk20.jpg",
+            ],
+          },
+          {
+            id: 71,
+            title: "Rainbow Xylophone",
+            category: "Percussion Instruments",
+            material: "Foam",
+            description:
+              "A colorful model of a xylophone with keys painted in a rainbow pattern.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200291/photo_2025-10-10_01-36-09_t54xm6.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200300/photo_2025-10-10_01-36-12_jpgomw.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200307/photo_2025-10-10_01-36-13_znhak6.jpg",
+            ],
+          },
+          {
+            id: 72,
+            title: "Harp Detail",
+            category: "String Instruments",
+            material: "Resin",
+            description:
+              "A close-up model showing the detail of a harp's soundbox and strings.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200299/photo_2025-10-10_01-36-27_wx6tpr.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200291/photo_2025-10-10_01-36-26_a39f12.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200291/photo_2025-10-10_01-36-25_gjaogp.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200299/photo_2025-10-10_01-36-27_wx6tpr.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200361/photo_2025-10-10_01-36-22_mtpj1y.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200291/photo_2025-10-10_01-36-25_gjaogp.jpg",
+            ],
+          },
+          {
+            id: 73,
+            title: "Greek Bouzouki",
+            category: "String Instruments",
+            material: "Cardboard",
+            description:
+              "A model of a Greek bouzouki with traditional black and white ornamentation.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200303/photo_2025-10-10_01-36-33_o79zy8.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200303/photo_2025-10-10_01-36-33_o79zy8.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200302/photo_2025-10-10_01-36-31_2_lltonc.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200300/photo_2025-10-10_01-36-29_h4xqkk.jpg",
+            ],
+          },
+          {
+            id: 74,
+            title: "Golden Trumpet",
+            category: "Brass Instruments",
+            material: "Mixed Media",
+            description:
+              "A model of a golden trumpet resting on a black stand.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201970/photo_2025-10-10_01-36-38_rswhn8.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760200335/photo_2025-10-10_01-37-10_nwhjrr.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201970/photo_2025-10-10_01-36-37_doy65e.jpg",
+            ],
+          },
+          {
+            id: 75,
+            title: "Electronic Keyboard Synthesizer",
+            category: "Keyboard Instruments",
+            material: "Foam",
+            description:
+              "A detailed model of a modern electronic keyboard synthesizer with a digital display.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201970/photo_2025-10-10_01-37-17_g6fhji.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201970/photo_2025-10-10_01-37-13_xhjpzj.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201970/photo_2025-10-10_01-37-18_ty9kaj.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201981/photo_2025-10-10_01-37-15_dejfsa.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201970/photo_2025-10-10_01-37-16_yzm4oz.jpg",
+            ],
+          },
+          {
+            id: 77,
+            title: "Decorated Kithara",
+            category: "String Instruments",
+            material: "Cardboard",
+            description:
+              "A model of a kithara, an ancient stringed instrument, decorated with black and gold patterns.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201971/photo_2025-10-10_01-37-30_lwsfda.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201970/photo_2025-10-10_01-37-26_nym433.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201971/photo_2025-10-10_01-37-25_joy4bu.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201971/photo_2025-10-10_01-37-27_lbqffl.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201982/photo_2025-10-10_01-37-29_hnth1z.jpg",
+            ],
+          },
+          {
+            id: 78,
+            title: "Red Piano Accordion",
+            category: "Keyboard Instruments",
+            material: "Mixed Media",
+            description: "A model of a vibrant red and white piano accordion.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201981/photo_2025-10-10_01-37-43_ounzgo.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201982/photo_2025-10-10_01-37-39_zltghm.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201971/photo_2025-10-10_01-37-37_m4xqxp.jpg",
+            ],
+          },
+          {
+            id: 79,
+            title: "Vintage Gramophone",
+            category: "Audio Equipment",
+            material: "Foam",
+            description:
+              "A model of a vintage gramophone with a golden horn and a wooden-style base.",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201982/photo_2025-10-10_01-37-46_kjxzq1.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201981/photo_2025-10-10_01-37-44_arqt3g.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201982/photo_2025-10-10_01-37-48_feqbv0.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201987/photo_2025-10-10_01-37-51_fba9os.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201981/photo_2025-10-10_01-37-44_arqt3g.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201982/photo_2025-10-10_01-37-46_kjxzq1.jpg",
+            ],
+          },
 
+          {
+            id: 80,
+            title: "White Lute with Floral Art",
+            category: "String Instruments",
+            material: "Wood",
+            description:
+              "A white lute-style instrument featuring a delicate floral design, possibly inspired by traditional folk art. [16, 19, 20]",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201988/photo_2025-10-10_01-38-01_ta29u0.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201988/photo_2025-10-10_01-38-01_ta29u0.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201988/photo_2025-10-10_01-38-04_fsmnic.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201989/photo_2025-10-10_01-38-07_sywffi.jpg",
+            ],
+          },
+          {
+            id: 83,
+            title: "Acoustic Guitar with Mandala Art",
+            category: "String Instruments",
+            material: "Wood",
+            description:
+              "A black acoustic guitar decorated with intricate gold mandala-style artwork around the soundhole. [15, 22, 23, 24, 28]",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201993/photo_2025-10-10_01-38-33_rmadkj.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201993/photo_2025-10-10_01-38-31_ofo7qz.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201993/photo_2025-10-10_01-38-32_gkm5vm.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201994/photo_2025-10-10_01-38-35_ugvg0p.jpg",
+            ],
+          },
+          {
+            id: 84,
+            title: "Folk Art Banjo",
+            category: "String Instruments",
+            material: "Wood & Metal",
+            description:
+              "A round-bodied string instrument, similar to a banjo or a round-bodied lute, featuring colorful folk art with animal motifs. [14, 25, 29]",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202004/photo_2025-10-10_01-38-42_pqecew.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202000/photo_2025-10-10_01-38-43_ywk3a1.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202005/photo_2025-10-10_01-38-45_nyo835.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201995/photo_2025-10-10_01-38-39_nyd1gn.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201993/photo_2025-10-10_01-38-34_xq7aml.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201993/photo_2025-10-10_01-38-34_xq7aml.jpg",
+            ],
+          },
+          {
+            id: 86,
+            title: "Black Electric Guitar",
+            category: "String Instruments",
+            material: "Mixed Media",
+            description:
+              "A classic black and white electric guitar model. [4, 6, 12, 13, 17]",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202006/photo_2025-10-10_01-38-46_uzoet5.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202009/photo_2025-10-10_01-38-51_tnis7l.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202010/photo_2025-10-10_01-38-49_gbp4aj.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202009/photo_2025-10-10_01-38-51_tnis7l.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201995/photo_2025-10-10_01-38-54_cwkddw.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201995/photo_2025-10-10_01-38-52_ajipmm.jpg",
+            ],
+          },
+          {
+            id: 87,
+            title: "Vintage Turntable Model",
+            category: "Audio Equipment",
+            material: "Wood & Plastic",
+            description:
+              "A model of a vintage-style turntable or record player. [5, 7, 8, 9, 11]",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202000/photo_2025-10-10_01-39-09_w1wlrz.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201999/photo_2025-10-10_01-39-02_g6ztdc.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201999/photo_2025-10-10_01-39-07_tlkxlt.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202000/photo_2025-10-10_01-39-08_fx4pmq.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201999/photo_2025-10-10_01-39-03_vtwvzl.jpg",
+            ],
+          },
+          {
+            id: 88,
+            title: "Ancient Greek Lyre",
+            category: "String Instruments",
+            material: "Wood",
+            description:
+              "A wooden model of an ancient Greek lyre, a stringed instrument, featuring a deer motif. [2, 3, 10, 18, 21]",
+            imageUrls: [
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760201999/photo_2025-10-10_01-39-11_2_zvlwfx.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202000/photo_2025-10-10_01-39-13_sxnrno.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202004/photo_2025-10-10_01-39-11_katc8t.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202006/photo_2025-10-10_01-39-16_gh9f4h.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202005/photo_2025-10-10_01-39-15_x2c8xc.jpg",
+              "https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202005/photo_2025-10-10_01-39-14_jfuur0.jpg",
+            ],
+          },
+        ];
+        // ==================================================================
+        // END: PASTE YOUR MODEL DATA HERE
+        // ==================================================================
 
-            const galleryWall = document.getElementById('gallery-wall');
-            const infoTitleEl = document.getElementById('info-title');
-            const infoCategoryEl = document.getElementById('info-category');
-            const infoDescriptionEl = document.getElementById('info-description');
-            const modelDetailsPanel = document.getElementById('model-details-panel');
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const closeBtn = document.getElementById('close-lightbox');
+        const galleryWall = document.getElementById("gallery-wall");
+        const infoTitleEl = document.getElementById("info-title");
+        const infoCategoryEl = document.getElementById("info-category");
+        const infoDescriptionEl = document.getElementById("info-description");
+        const modelDetailsPanel = document.getElementById(
+          "model-details-panel",
+        );
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImg = document.getElementById("lightbox-img");
+        const closeBtn = document.getElementById("close-lightbox");
 
-            function renderModels() {
-                if (!galleryWall) return;
-                galleryWall.innerHTML = '';
-                if (modelsData.length === 0) {
-                    galleryWall.innerHTML = "<p>No models to display. Please add data to the 'modelsData' array in the script.</p>";
-                    return;
-                }
-                modelsData.forEach(model => {
-                    const imageElements = model.imageUrls.map((url, index) => `<img src="${url}" alt="${model.title}" class="model-image ${index === 0 ? 'active' : ''}" data-index="${index}">`).join('');
-                    const navButtons = model.imageUrls.length > 1 ? `<div class="card-nav"><button class="card-nav-btn prev-btn" aria-label="Previous Image"><i class="fas fa-chevron-left"></i></button><button class="card-nav-btn next-btn" aria-label="Next Image"><i class="fas fa-chevron-right"></i></button></div>` : '';
-                    const modelHTML = `
+        function renderModels() {
+          if (!galleryWall) return;
+          galleryWall.innerHTML = "";
+          if (modelsData.length === 0) {
+            galleryWall.innerHTML =
+              "<p>No models to display. Please add data to the 'modelsData' array in the script.</p>";
+            return;
+          }
+          modelsData.forEach((model) => {
+            const imageElements = model.imageUrls
+              .map(
+                (url, index) =>
+                  `<img src="${url}" alt="${model.title}" class="model-image ${index === 0 ? "active" : ""}" data-index="${index}">`,
+              )
+              .join("");
+            const navButtons =
+              model.imageUrls.length > 1
+                ? `
+    <div class="gallery-badge">
+      <i class="fas fa-images"></i>
+      <span>${model.imageUrls.length}</span>
+    </div>
+
+    <div class="zoom-hint" aria-hidden="true">
+      <i class="fas fa-expand"></i>
+    </div>
+
+    <div class="card-nav">
+      <button class="card-nav-btn prev-btn" aria-label="Previous Image">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="card-nav-btn next-btn" aria-label="Next Image">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <div class="card-dots">
+      ${model.imageUrls
+        .map(
+          (_, index) => `
+        <span class="dot ${index === 0 ? "active" : ""}" data-dot="${index}"></span>
+      `,
+        )
+        .join("")}
+    </div>
+  `
+                : `
+    <div class="zoom-hint" aria-hidden="true">
+      <i class="fas fa-expand"></i>
+    </div>
+  `;
+            const modelHTML = `
                         <div class="model-card" data-title="${model.title}" data-category="${model.category}" data-material="${model.material}" data-description="${model.description}">
                             <div class="image-container">${imageElements}${navButtons}</div>
                             <div class="card-content">
@@ -1082,68 +1403,86 @@
                                 <span class="model-material">${model.material}</span>
                             </div>
                         </div>`;
-                    galleryWall.innerHTML += modelHTML;
-                });
+            galleryWall.innerHTML += modelHTML;
+          });
+        }
+
+        function addEventListeners() {
+          const modelCards = document.querySelectorAll(".model-card");
+          modelCards.forEach((card) => {
+            card.addEventListener("mouseenter", () => {
+              modelDetailsPanel.style.opacity = 0;
+              setTimeout(() => {
+                infoTitleEl.textContent = card.dataset.title;
+                infoCategoryEl.textContent = card.dataset.category;
+                infoDescriptionEl.textContent = card.dataset.description;
+                modelDetailsPanel.style.opacity = 1;
+              }, 300);
+            });
+            const nextBtn = card.querySelector(".next-btn");
+            const prevBtn = card.querySelector(".prev-btn");
+            const images = card.querySelectorAll(".model-image");
+            if (nextBtn) {
+              nextBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                let currentIndex = Array.from(images).findIndex((img) =>
+                  img.classList.contains("active"),
+                );
+                images[currentIndex].classList.remove("active");
+                const nextIndex = (currentIndex + 1) % images.length;
+                images[nextIndex].classList.add("active");
+                updateDots(card, nextIndex);
+              });
             }
 
-            function addEventListeners() {
-                const modelCards = document.querySelectorAll('.model-card');
-                modelCards.forEach(card => {
-                    card.addEventListener('mouseenter', () => {
-                        modelDetailsPanel.style.opacity = 0;
-                        setTimeout(() => {
-                            infoTitleEl.textContent = card.dataset.title;
-                            infoCategoryEl.textContent = card.dataset.category;
-                            infoDescriptionEl.textContent = card.dataset.description;
-                            modelDetailsPanel.style.opacity = 1;
-                        }, 300);
-                    });
-                    const nextBtn = card.querySelector('.next-btn');
-                    const prevBtn = card.querySelector('.prev-btn');
-                    const images = card.querySelectorAll('.model-image');
-                    if (nextBtn) {
-                        nextBtn.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            let currentIndex = Array.from(images).findIndex(img => img.classList.contains('active'));
-                            images[currentIndex].classList.remove('active');
-                            images[(currentIndex + 1) % images.length].classList.add('active');
-                        });
-                    }
-                    if (prevBtn) {
-                        prevBtn.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            let currentIndex = Array.from(images).findIndex(img => img.classList.contains('active'));
-                            images[currentIndex].classList.remove('active');
-                            images[(currentIndex - 1 + images.length) % images.length].classList.add('active');
-                        });
-                    }
-                    const openLightbox = () => {
-                        const activeImg = card.querySelector('.model-image.active');
-                        if (activeImg) {
-                            lightboxImg.src = activeImg.src;
-                            lightbox.classList.add('active');
-                        }
-                    };
-                    card.querySelector('.image-container').addEventListener('click', openLightbox);
-                });
-                
-                // Event listeners for the lightbox
-                closeBtn.addEventListener('click', () => {
-                    lightbox.classList.remove('active');
-                });
-
-                lightbox.addEventListener('click', (e) => {
-                    // Close lightbox if the background is clicked, but not the image itself
-                    if (e.target === lightbox) {
-                        lightbox.classList.remove('active');
-                    }
-                });
+            if (prevBtn) {
+              prevBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                let currentIndex = Array.from(images).findIndex((img) =>
+                  img.classList.contains("active"),
+                );
+                images[currentIndex].classList.remove("active");
+                const prevIndex =
+                  (currentIndex - 1 + images.length) % images.length;
+                images[prevIndex].classList.add("active");
+                updateDots(card, prevIndex);
+              });
             }
+            const openLightbox = () => {
+              const activeImg = card.querySelector(".model-image.active");
+              if (activeImg) {
+                lightboxImg.src = activeImg.src;
+                lightbox.classList.add("active");
+              }
+            };
+            card
+              .querySelector(".image-container")
+              .addEventListener("click", openLightbox);
+          });
 
-            renderModels();
-            addEventListeners();
+          // Event listeners for the lightbox
+          closeBtn.addEventListener("click", () => {
+            lightbox.classList.remove("active");
+          });
+
+          lightbox.addEventListener("click", (e) => {
+            // Close lightbox if the background is clicked, but not the image itself
+            if (e.target === lightbox) {
+              lightbox.classList.remove("active");
+            }
+          });
+        }
+
+        renderModels();
+        addEventListeners();
+      });
+
+      function updateDots(card, activeIndex) {
+        const dots = card.querySelectorAll(".dot");
+        dots.forEach((dot, index) => {
+          dot.classList.toggle("active", index === activeIndex);
         });
+      }
     </script>
-
-</body>
+  </body>
 </html>

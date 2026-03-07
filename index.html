@@ -156,7 +156,7 @@
             sophisticated design works—all presented within an atmosphere of
             elegance and artistic excellence.
           </p>
-          <a href="#gallery" class="art-showcase-cta-button">Explore Gallery</a>
+          <a href="/AboutPage.html" class="art-showcase-cta-button">Explore Gallery</a>
         </div>
 
         <div class="art-showcase-visual-content">
@@ -181,70 +181,94 @@
   <!-- =============================================================== -->
   <section id="portfolio">
     <!-- Portfolio Header -->
-    <div class="hero-section">
-      <div class="container">
-        <h1 class="hero-title">Artistic Excellence</h1>
-        <p class="hero-subtitle">A Portfolio of Distinguished Works</p>
-        <div class="section-divider"></div>
+ <!-- Portfolio Header + Styled Cards -->
+<div class="hero-section hero-cards-style">
+  <div class="container">
+    <h1 class="hero-title">Artistic Excellence</h1>
+    <p class="hero-subtitle">A Portfolio of Distinguished Works</p>
+    <div class="section-divider"></div>
 
-        <div class="category-filter">
-          <button class="filter-btn active" data-filter="all">
-            All Works
-          </button>
-          <button class="filter-btn" data-filter="art">Art</button>
-          <button class="filter-btn" data-filter="architecture">
-            Architecture
-          </button>
+    <div class="category-filter">
+      <button class="filter-btn active" data-filter="all">All Works</button>
+      <button class="filter-btn" data-filter="art">Art</button>
+      <button class="filter-btn" data-filter="architecture">Architecture</button>
+    </div>
+
+    <div class="portfolio-grid portfolio-grid-featured">
+      <!-- Art -->
+      <div class="portfolio-item feature-card" data-category="art">
+        <img
+          src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760306741/IMG_%D9%A2%D9%A0%D9%A2%D9%A2%D9%A0%D9%A4%D9%A0%D9%A1_%D9%A1%D9%A8%D9%A2%D9%A2%D9%A2%D9%A7_nfgvva.jpg"
+          alt="Abstract Art"
+          class="portfolio-img"
+        />
+        <div class="feature-overlay"></div>
+
+<div class="feature-icon icon-art">
+  <i class="fa-solid fa-palette"></i>
+</div>
+
+        <div class="portfolio-content feature-content">
+          <div class="portfolio-category">Painting</div>
+          <h3 class="portfolio-title">Golden Dome of Jerusalem</h3>
+          <p class="portfolio-description">
+            A vibrant painting of the Dome of the Rock in Jerusalem's Old City.
+          </p>
+          <span class="explore-btn">Explore</span>
+        </div>
+      </div>
+
+      <!-- Architecture -->
+      <div class="portfolio-item feature-card" data-category="architecture">
+        <img
+          src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760802672/44_cm8ufg.jpg"
+          alt="Modern Building"
+          class="portfolio-img"
+        />
+        <div class="feature-overlay"></div>
+
+<div class="feature-icon icon-architecture">
+  <i class="fa-solid fa-building"></i>
+</div>
+
+
+        <div class="portfolio-content feature-content">
+          <div class="portfolio-category">Architecture</div>
+          <h3 class="portfolio-title">Serene Kitchen Design</h3>
+          <p class="portfolio-description">
+            An elegant kitchen with blue cabinetry, marble, and gold accents.
+          </p>
+          <span class="explore-btn">Explore</span>
+        </div>
+      </div>
+
+      <!-- Craft -->
+      <div class="portfolio-item feature-card" data-category="Craft">
+        <img
+          src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202028/IMG_20240507_004214_u0w1od.jpg"
+          alt="Craft Art"
+          class="portfolio-img"
+        />
+        <div class="feature-overlay"></div>
+
+      <div class="feature-icon icon-craft">
+  <i class="fa-solid fa-hammer"></i>
+</div>
+
+        <div id="Craft" class="portfolio-content feature-content">
+          <div class="portfolio-category">Craft</div>
+          <h3 class="portfolio-title">Miniature Plumber's Workshop</h3>
+          <p class="portfolio-description">
+            A detailed diorama of a plumber's workshop with miniature tools and appliances.
+          </p>
+          <span class="explore-btn">Explore</span>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <!-- Portfolio Grid -->
-    <div class="container">
-      <div class="portfolio-grid">
-        <div class="portfolio-item" data-category="art">
-          <img
-            src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760306741/IMG_%D9%A2%D9%A0%D9%A2%D9%A2%D9%A0%D9%A4%D9%A0%D9%A1_%D9%A1%D9%A8%D9%A2%D9%A2%D9%A2%D9%A7_nfgvva.jpg"
-            alt="Abstract Art" class="portfolio-img" />
-          <div class="portfolio-content">
-            <div class="portfolio-category">Painting</div>
-            <h3 class="portfolio-title">Golden Dome of Jerusalem</h3>
-            <p class="portfolio-description">
-              A vibrant painting of the Dome of the Rock in Jerusalem's Old
-              City.
-            </p>
-          </div>
-        </div>
-
-        <div class="portfolio-item" data-category="architecture">
-          <img
-            src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760802672/44_cm8ufg.jpg"
-            alt="Modern Building" class="portfolio-img" />
-          <div class="portfolio-content">
-            <div class="portfolio-category">Architecture</div>
-            <h3 class="portfolio-title">Serene Kitchen Design</h3>
-            <p class="portfolio-description">
-              An elegant kitchen with blue cabinetry, marble, and gold
-              accents.
-            </p>
-          </div>
-        </div>
-
-        <div class="portfolio-item" data-category="Craft">
-          <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760202028/IMG_20240507_004214_u0w1od.jpg"
-            alt="Craft Art" class="portfolio-img" />
-          <div id="Craft" class="portfolio-content">
-            <div class="portfolio-category">Craft</div>
-            <h3 class="portfolio-title">Miniature Plumber's Workshop</h3>
-            <p class="portfolio-description">
-              A detailed diorama of a plumber's workshop with miniature tools and appliances.
-            </p>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
+ 
     <!-- Paintings Sub-Section -->
     <div id="paintings" class="paintings-section container">
       <h2 class="section-title">Paintings</h2>

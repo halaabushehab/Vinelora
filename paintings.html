@@ -146,21 +146,100 @@
             pointer-events: none;
         }
 
-        .artwork-container {
-            position: absolute;
-            top: 15%;
-            left: 18%;
-            width: 63%;
-            height: 72%;
-            background: var(--color-white);
-            overflow: hidden;
-            z-index: 2;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
+.artwork-container {
+    position: absolute;
+    top: 15%;
+    left: 18%;
+    width: 63%;
+    height: 72%;
+    background: var(--color-white);
+    overflow: hidden;
+    z-index: 2;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
 
+.artwork-image {
+    width: 100%;
+    height: 75%;
+    object-fit: cover;
+    cursor: zoom-in;
+    transition: transform 0.35s ease;
+}
+
+.painting-frame:hover .artwork-image {
+    transform: scale(1.03);
+}
+
+/* طبقة hover قوية لكن ناعمة */
+.artwork-hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 75%;
+    background: rgba(12, 59, 46, 0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.28s ease;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.painting-frame:hover .artwork-hover-overlay {
+    opacity: 1;
+}
+
+/* محتوى الإشارة */
+.zoom-cue {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    transform: translateY(8px) scale(0.96);
+    transition: transform 0.28s ease, opacity 0.28s ease;
+    opacity: 0;
+}
+
+.painting-frame:hover .zoom-cue {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.zoom-cue i {
+    font-size: 0.95rem;
+}
+
+/* للموبايل: الإشارة تضل ظاهرة شوي لأنه ما في hover واضح */
+@media (max-width: 992px) {
+    .artwork-hover-overlay {
+        opacity: 1;
+        background: linear-gradient(to top, rgba(12, 59, 46, 0.35), rgba(12, 59, 46, 0.08));
+        align-items: flex-end;
+        padding-bottom: 14px;
+    }
+
+    .zoom-cue {
+        opacity: 1;
+        transform: none;
+        font-size: 0.85rem;
+        padding: 8px 14px;
+    }
+}
         .artwork-image {
             width: 100%;
             height: 75%;
@@ -508,15 +587,23 @@
                              data-medium="${painting.medium}" 
                              data-description="${painting.description}">
                             <img src="https://res.cloudinary.com/dj4k75lkt/image/upload/v1760308797/7e5a4e78d2fd42b7805709d144cab1c8_qvriep.png" alt="Frame" class="frame-image">
-                            <div class="artwork-container">
-                                <img src="${painting.imageUrl}" alt="${painting.title}" class="artwork-image">
-                                <div class="gallery-label">
-                                    <h4 class="artwork-title">"${painting.title}"</h4>
-                                    <div class="artwork-details">
-                                        <span class="artwork-medium">${painting.medium}</span>
-                                    </div>
-                                </div>
-                            </div>
+             <div class="artwork-container">
+    <img src="${painting.imageUrl}" alt="${painting.title}" class="artwork-image">
+
+    <div class="artwork-hover-overlay">
+        <div class="zoom-cue">
+            <i class="fas fa-magnifying-glass-plus"></i>
+            <span>View Artwork</span>
+        </div>
+    </div>
+
+    <div class="gallery-label">
+        <h4 class="artwork-title">"${painting.title}"</h4>
+        <div class="artwork-details">
+            <span class="artwork-medium">${painting.medium}</span>
+        </div>
+    </div>
+</div>
                         </div>
                     `;
                     galleryWall.insertAdjacentHTML('beforeend', paintingHTML );
