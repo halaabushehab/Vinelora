@@ -1406,7 +1406,7 @@ footer {
         .image-panel {
             width: 18%; /* عرض كل لوحة */
             height: 80%;
-            background: url('https://res.cloudinary.com/dj4k75lkt/image/upload/v1760211269/gfg_iu3gmb.jpg' ) no-repeat;
+            background: url('https://res.cloudinary.com/dj4k75lkt/image/upload/v1760211271/jnhh_fdncuz.jpg' ) no-repeat;
             background-size: cover;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1),
@@ -1725,4 +1725,336 @@ footer {
         height: 40px;
         border-radius: 10px;
     }
+}
+
+
+/* --- الحاوية الرئيسية --- */
+.hero-cards-style {
+  padding: 50px 0 60px;
+  background: #f8f6f2;
+}
+
+.hero-cards-style .hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 5vw, 4.2rem);
+  font-weight: 700;
+  color: #0C3B2E;
+  text-align: center;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.hero-cards-style .hero-subtitle {
+  text-align: center;
+  font-size: 1.05rem;
+  color: #5a6d75;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+.hero-cards-style .section-divider {
+  width: 80px;
+  height: 3px;
+  margin: 1.5rem auto 2.5rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #13543E, #DC143C);
+}
+
+/* --- أزرار التصفية --- */
+.hero-cards-style .category-filter {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.hero-cards-style .filter-btn {
+  padding: 8px 22px;
+  background: transparent;
+  border: 1.5px solid #13543E;
+  color: #13543E;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.hero-cards-style .filter-btn.active,
+.hero-cards-style .filter-btn:hover {
+  background: #13543E;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(19, 84, 62, 0.25);
+  transform: translateY(-2px);
+}
+
+/* --- الشبكة --- */
+.portfolio-grid-featured {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+@media (max-width: 992px) {
+  .portfolio-grid-featured {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+}
+
+@media (max-width: 600px) {
+  .portfolio-grid-featured {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+/* --- البطاقة (ارتفاع أقل) --- */
+.feature-card {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  aspect-ratio: 4 / 4.8;
+  cursor: pointer;
+  background: #ffffff;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 0.5s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px) scale(1.01);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.10);
+}
+
+/* --- الصورة --- */
+.feature-card .portfolio-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s ease;
+}
+
+.feature-card:hover .portfolio-img {
+  transform: scale(1.06);
+}
+
+/* --- الطبقة العلوية (overlay) --- */
+.feature-card .feature-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(0, 0, 0, 0.15) 35%,
+    rgba(0, 0, 0, 0.60) 85%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+  transition: background 0.5s ease;
+}
+
+.feature-card:hover .feature-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.02) 0%,
+    rgba(0, 0, 0, 0.10) 30%,
+    rgba(0, 0, 0, 0.55) 80%,
+    rgba(0, 0, 0, 0.80) 100%
+  );
+}
+
+/* --- الأيقونة الدائرية (أصغر) --- */
+.feature-card .feature-icon {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #ffffff;
+  z-index: 5;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.08) rotate(-5deg);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.20);
+}
+
+.icon-art { background: #2A9D8F; }
+.icon-architecture { background: #13543E; }
+.icon-craft { background: #DC143C; }
+
+/* --- العنصر الزخرفي الجانبي (خط أنيق) --- */
+.feature-card .card-accent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 5px;
+  height: 0;
+  background: linear-gradient(to bottom, #DC143C, #13543E);
+  z-index: 6;
+  transition: height 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  border-radius: 0 0 0 6px;
+}
+
+.feature-card:hover .card-accent {
+  height: 100%;
+}
+
+/* --- محتوى البطاقة (الأسفل) --- */
+.feature-card .feature-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.6rem 1.6rem 1.4rem;
+  z-index: 4;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+/* --- حاوية النص مع الخط الزخرفي --- */
+.feature-card .category-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* --- النص الرئيسي (أصغر قليلاً) --- */
+.feature-card .portfolio-category {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.30);
+  font-family: 'Segoe UI', system-ui;
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover .portfolio-category {
+  transform: translateX(4px);
+}
+
+/* --- الخط الزخرفي تحت النص (أقصر) --- */
+.feature-card .category-line {
+  display: block;
+  width: 35px;
+  height: 2.5px;
+  background: #DC143C;
+  border-radius: 999px;
+  transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+              background 0.3s ease;
+}
+
+.feature-card:hover .category-line {
+  width: 60px;
+  background: #DC143C;
+}
+
+/* --- زر EXPLORE المبتكر (أصغر) --- */
+.feature-card .explore-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.4rem 1.4rem 0.4rem 1.6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  color: #0C3B2E;
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  cursor: default;
+}
+
+.feature-card .explore-btn .btn-text {
+  transition: transform 0.3s ease;
+}
+
+.feature-card .explore-btn .btn-icon {
+  font-size: 0.65rem;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  opacity: 0.7;
+}
+
+.feature-card:hover .explore-btn {
+  background: #ffffff;
+  border-color: #13543E;
+  box-shadow: 0 12px 32px rgba(19, 84, 62, 0.15);
+  transform: scale(1.04) translateX(2px);
+}
+
+.feature-card:hover .explore-btn .btn-icon {
+  transform: translateX(6px);
+  opacity: 1;
+  color: #DC143C;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .feature-card {
+    aspect-ratio: 4 / 4.2;
+  }
+  .feature-card .feature-content {
+    padding: 1.2rem 1rem 1rem;
+  }
+  .feature-card .portfolio-category {
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+  }
+  .feature-card .explore-btn {
+    font-size: 0.6rem;
+    padding: 0.35rem 1rem 0.35rem 1.2rem;
+  }
+  .feature-card .feature-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 0.9rem;
+    top: 14px;
+    left: 14px;
+  }
+  .feature-card .category-line {
+    width: 28px;
+  }
+  .feature-card:hover .category-line {
+    width: 45px;
+  }
+}
+
+@media (max-width: 480px) {
+  .feature-card {
+    aspect-ratio: 4 / 4;
+  }
+  .feature-card .feature-content {
+    padding: 1rem 0.8rem 0.8rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .feature-card .explore-btn {
+    align-self: flex-start;
+  }
+  .feature-card .portfolio-category {
+    font-size: 0.8rem;
+  }
 }
